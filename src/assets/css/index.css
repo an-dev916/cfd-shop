@@ -1,0 +1,11 @@
+a {
+  cursor: pointer;
+}
+
+a.active {
+  color: #fcb941 !important;
+}
+
+.modal-backdrop {
+  z-index: 1000;
+}

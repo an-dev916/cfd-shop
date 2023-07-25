@@ -1,4 +1,4 @@
-const PRODUCT_PATH = "/product";
+const PRODUCT_PATH = "/products";
 const BLOG_PATH = "/blog";
 const DASHBOARD_PATH = "/dashboard";
 
@@ -25,4 +25,3 @@ export const PATHS = {
   RETURNS: "/returns",
   SHIPPING: "/shipping",
 };
-console.log("BLOG_SINGLE :>> ", PATHS.BLOG_SINGLE);

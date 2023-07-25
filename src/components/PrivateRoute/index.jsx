@@ -5,9 +5,10 @@ import { LOCAL_STORAGE } from "../../constants/localStorage";
 const PrivateRoute = ({ redirectPath }) => {
   const isLogin = localStorage.getItem(LOCAL_STORAGE.token);
 
-  if (!!isLogin) {
+  if (!isLogin) {
     return <Navigate to={redirectPath} />;
   }
+
   return (
     <>
       <Outlet />

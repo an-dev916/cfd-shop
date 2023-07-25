@@ -1,6 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../constants/pathnames";
+import useDashboard from "./useDashboard";
 
 const MyAddresses = () => {
+  const { profile } = useDashboard();
+  const { firstName, email, phone } = profile || {};
   return (
     <div
       className="tab-pane fade show active"
@@ -17,13 +22,19 @@ const MyAddresses = () => {
             <div className="card-body">
               <h3 className="card-title">Billing Address</h3>
               <p>
-                <strong>Fullname:</strong> Tran Nghia <br />
-                <strong>Email:</strong> trannghia@gmail.com <br />
-                <strong>Phone number:</strong> 098 9596 912 <br />
+                <strong>Fullname: </strong>
+                {firstName || ""}
                 <br />
-                <a href="#">
+                <strong>Email: </strong>
+                {email || ""}
+                <br />
+                <strong>Phone number: </strong>
+                {phone || ""}
+                <br />
+                <br />
+                <Link to={PATHS.DASHBOARD.INDEX}>
                   Edit <i className="icon-edit" />
-                </a>
+                </Link>
               </p>
             </div>
           </div>
@@ -35,9 +46,9 @@ const MyAddresses = () => {
               <p>
                 Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi <br />
                 <br />
-                <a href="#">
+                <Link to={PATHS.DASHBOARD.INDEX}>
                   Edit <i className="icon-edit" />
-                </a>
+                </Link>
               </p>
             </div>
           </div>

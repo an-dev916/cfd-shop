@@ -1,8 +1,10 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { PATHS } from "../constants/pathnames";
+import useDashboard from "../pages/dashboard/useDashboard";
 
 const DashboardLayout = () => {
+  const { profileInfo, onUpdate, onLogout } = useDashboard();
   return (
     <main className="main">
       <div
@@ -88,7 +90,7 @@ const DashboardLayout = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" onClick={onLogout}>
                       Sign Out
                     </a>
                   </li>
@@ -97,7 +99,7 @@ const DashboardLayout = () => {
               <div className="col-md-8 col-lg-9">
                 <div className="tab-content">
                   {/* Outlet */}
-                  <Outlet />
+                  <Outlet profileInfo={profileInfo} onUpdate={onUpdate} />
                 </div>
               </div>
             </div>
