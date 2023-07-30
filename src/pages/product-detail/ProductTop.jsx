@@ -92,6 +92,7 @@ const ProductTop = ({
                         }
                         return (
                           <a
+                            key={index}
                             className={cn("product-gallery-item", {
                               active: imgActive === index,
                             })}
