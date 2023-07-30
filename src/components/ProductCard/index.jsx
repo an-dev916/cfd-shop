@@ -6,9 +6,13 @@ import { styled } from "styled-components";
 import { LOCAL_STORAGE } from "../../constants/localStorage";
 import { PATHS } from "../../constants/pathnames";
 import { THUNK_STATUS } from "../../constants/thunkStatus";
+import authService from "../../services/authService";
+import { orderService } from "../../services/orderService";
+import { authActions } from "../../store/reducers/authenReducer";
 import { updateCart } from "../../store/reducers/cartReducer";
 import { formatCurrency } from "../../utils/format";
 import { useAuthen } from "../MainContext";
+import "./style.css";
 
 const ImgWrap = styled.div`
   display: flex;
@@ -19,6 +23,7 @@ const ImgWrap = styled.div`
 
 const ProductCard = ({ product }) => {
   const { slug, rating, images, title, price, id } = product || {};
+  const { profile } = useSelector((state) => state.auth);
 
   const token = localStorage.getItem(LOCAL_STORAGE.token);
 
@@ -84,11 +89,57 @@ const ProductCard = ({ product }) => {
         }
         const res = await dispatch(updateCart(addPayload)).unwrap();
         if (res.id) {
+          // message.config({
+          //   top: 62,
+          // });
           message.success("Add To Cart Succesfully!");
         }
       } catch (error) {
         console.log("error", error);
         message.error("Something wrong");
+      }
+    }
+  };
+
+  const handleWishList = async (productID) => {
+    if (!token) {
+      onOpenModal();
+    } else if (productID) {
+      try {
+        const payload = {
+          product: productID,
+        };
+
+        if (profile?.id) {
+          const matchIndex = profile?.whiteList?.findIndex(
+            (item) => item?.id === productID
+          );
+
+          if (matchIndex > -1) {
+            const res = await orderService.deleteWhiteList(payload);
+            const removeRes = res?.data?.data;
+            if (removeRes) {
+              const profileRes = await authService.getProfile();
+              if (profileRes?.data?.data) {
+                dispatch(authActions.setProfile(profileRes?.data?.data));
+                message.success("Removed from Wishlist!");
+              }
+            }
+          } else {
+            const res = await orderService.postWhiteList(payload);
+            const addRes = res?.data?.data;
+            if (addRes) {
+              const profileRes = await authService.getProfile();
+              if (profileRes?.data?.data) {
+                dispatch(authActions.setProfile(profileRes?.data?.data));
+                message.success("Added to Wishlist!");
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.log("error :>> ", error);
+        message.error("Something wrong, please try again!");
       }
     }
   };
@@ -132,7 +183,10 @@ const ProductCard = ({ product }) => {
           /> */}
         </Link>
         <div className="product-action-vertical">
-          <a href="#" className="btn-product-icon btn-wishlist btn-expandable">
+          <a
+            onClick={() => handleWishList(id)}
+            className="btn-product-icon btn-wishlist btn-expandable"
+          >
             <span>add to wishlist</span>
           </a>
         </div>
@@ -148,7 +202,7 @@ const ProductCard = ({ product }) => {
       </figure>
       <div className="product-body">
         <h3 className="product-title">
-          <a href="product-detail.html">{title || "No Title"}</a>
+          <Link to={PATHS.PRODUCT + `/${slug}`}>{title || "No Title"}</Link>
         </h3>
         <div className="product-price"> ${formatCurrency(price) || "0"} </div>
         <div className="ratings-container">

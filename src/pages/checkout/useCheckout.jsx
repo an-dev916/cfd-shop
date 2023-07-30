@@ -106,7 +106,7 @@ export const useCheckout = () => {
       product: modProducts,
       quantity,
       totalProduct,
-      discount: 0,
+      discount: cartInfo?.discount,
       discountCode,
       paymentMethod: currPayment || "",
       note,

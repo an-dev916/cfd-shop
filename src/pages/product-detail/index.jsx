@@ -1,414 +1,232 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { productService } from "../../services/productSevice";
+import ProductTabs from "./ProductTabs";
+import ProductTop from "./ProductTop";
+import { useProductDetail } from "./useProductDetail";
+import "./css/style.css";
+import { useAuthen } from "../../components/MainContext";
+import { LOCAL_STORAGE } from "../../constants/localStorage";
+import { useDispatch, useSelector } from "react-redux";
+import { THUNK_STATUS } from "../../constants/thunkStatus";
+import { message } from "antd";
+import { updateCart } from "../../store/reducers/cartReducer";
+import { orderService } from "../../services/orderService";
+import { authActions } from "../../store/reducers/authenReducer";
+import authService from "../../services/authService";
+import Breadcrumb from "../../components/Breadcrumb";
+import { PATHS } from "../../constants/pathnames";
 
 const ProductDetail = () => {
+  // General
+  const {
+    productTopProps,
+    productTabsProps,
+    renderProduct,
+    setRenderProduct,
+    setRenderReviews,
+    renderReviews,
+    setAvrReviews,
+    whiteList,
+    profile,
+  } = useProductDetail();
+  const { quantityPruduct } = productTopProps || {};
+  const { onOpenModal } = useAuthen();
+  const { slug } = useParams();
+  const token = localStorage.getItem(LOCAL_STORAGE.token);
+  const { cartInfo, updateStatus } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  console.log("profile :>> ", profile);
+  // Add To Cart
+  const onAddToCart = async (productID) => {
+    if (!token) {
+      onOpenModal();
+    } else if (productID && updateStatus !== THUNK_STATUS.pending) {
+      try {
+        let addPayload = {};
+        // Có 2 trường hợp khi update cart
+        // 1. Account đó đã từng add sản phẩm (lúc này sẽ có id của cart)
+        if (cartInfo.id) {
+          const matchIndex = cartInfo.product?.findIndex(
+            (product) => product.id === productID
+          );
+
+          const newProductPayload = cartInfo.product?.map((product) => {
+            return product.id;
+          });
+
+          const newQuantityPayload = [...cartInfo.quantity];
+
+          // id của sản phẩm đã tổn tại, chỉ cần tăng quantity ở vị trí matchIndex tương ứng
+          if (matchIndex > -1) {
+            newQuantityPayload[matchIndex] = (
+              Number(newQuantityPayload[matchIndex]) + Number(quantityPruduct)
+            ).toString();
+            console.log("id sp đã tồn tại");
+          }
+
+          // id sản phẩm chưa tồn tại trong product list,
+          // lúc này chỉ cần push id vào product và '1' hoặc 1 vào quantity tùy theo datatype của API ràng buộc
+          else {
+            newProductPayload.push(productID);
+            newQuantityPayload.push(quantityPruduct.toString());
+            console.log("id sp chưa tồn tại");
+          }
+
+          // Cập nhật lại payload
+          addPayload = {
+            ...cartInfo,
+            product: newProductPayload,
+            quantity: newQuantityPayload,
+          };
+        }
+
+        // 2. Account mới chưa có gì trong cartInfo
+        else {
+          // payload lúc này sẽ dựa vào các key được required trong api
+          addPayload = {
+            product: [productID],
+            quantity: [quantityPruduct.toString()],
+            subTotal: 0,
+            total: 0,
+            totalProduct: ["string"],
+            discount: 0,
+            paymentMethod: "string",
+          };
+        }
+        const res = await dispatch(updateCart(addPayload)).unwrap();
+        if (res.id) {
+          // message.config({
+          //   top: 62,
+          // });
+          message.success("Add To Cart Succesfully!");
+        }
+      } catch (error) {
+        console.log("error", error);
+        message.error("Something wrong");
+      }
+    }
+  };
+
+  // Handle Wish List
+  const handleWishList = async (productID) => {
+    if (!token) {
+      onOpenModal();
+    } else if (productID) {
+      try {
+        const payload = {
+          product: productID,
+        };
+
+        if (profile?.id) {
+          const matchIndex = profile?.whiteList?.findIndex(
+            (item) => item?.id === productID
+          );
+
+          if (matchIndex > -1) {
+            console.log("test click");
+            const res = await orderService.deleteWhiteList(payload);
+            const removeRes = res?.data?.data;
+            console.log("removeRes :>> ", removeRes);
+            if (removeRes) {
+              const profileRes = await authService.getProfile();
+              console.log("profileRes :>> ", profileRes);
+              if (profileRes?.data?.data) {
+                dispatch(authActions.setProfile(profileRes?.data?.data));
+                message.success("Removed from Wishlist!");
+              }
+            }
+          } else {
+            const res = await orderService.postWhiteList(payload);
+            const addRes = res?.data?.data;
+            if (addRes) {
+              const profileRes = await authService.getProfile();
+              console.log("profileRes :>> ", profileRes);
+              if (profileRes?.data?.data) {
+                dispatch(authActions.setProfile(profileRes?.data?.data));
+                message.success("Added to Wishlist!");
+              }
+            }
+          }
+        }
+
+        console.log("payload :>> ", payload);
+      } catch (error) {
+        console.log("error :>> ", error);
+        message.error("Something wrong, please try again!");
+      }
+    }
+  };
+
+  console.log("renderProduct :>> ", renderProduct);
+  console.log("renderReviews :>> ", renderReviews);
+  // Fetch Data
+  const getDetailProduct = async (slug) => {
+    try {
+      const res = await productService.getProductsBySlug(slug);
+      const detailRes = res?.data?.data;
+      if (detailRes) {
+        setRenderProduct(detailRes);
+        message.success(`Successfully!`);
+      }
+    } catch (error) {
+      message.error("Something wrong, please try again!");
+      console.log("error :>> ", error);
+    }
+  };
+
+  const geReviewsProduct = async (productID) => {
+    try {
+      const res = await orderService.getReview(productID);
+      const reviewsRes = res?.data?.data;
+      if (reviewsRes) {
+        setRenderReviews(reviewsRes);
+      }
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+
+  useEffect(() => {
+    getDetailProduct(slug);
+  }, [slug]);
+
+  useEffect(() => {
+    geReviewsProduct(renderProduct?.id);
+    if (!!renderReviews?.length) {
+      const totalReviews = renderReviews?.reduce(
+        (acc, curr) => acc + Number(curr?.rate || 2.5),
+        0
+      );
+      setAvrReviews(totalReviews / renderReviews.length);
+    }
+  }, [
+    JSON.stringify(renderProduct),
+    JSON.stringify(renderReviews),
+    JSON.stringify(profile),
+  ]);
+
   return (
     <main className="main">
-      <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
-        <div className="container d-flex align-items-center">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
-            </li>
-            <li className="breadcrumb-item">
-              <a href="product.html">Product</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              Dark yellow lace
-            </li>
-          </ol>
-        </div>
-      </nav>
+      <Breadcrumb className="mb-2">
+        <Breadcrumb.Item>
+          <Link to={PATHS.HOME}>Home</Link>{" "}
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to={PATHS.PRODUCT}>Product</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item isActive>{renderProduct?.name}</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="page-content">
         <div className="container">
-          <div className="product-details-top">
-            <div className="row">
-              <div className="col-md-6">
-                <div className="product-gallery product-gallery-vertical">
-                  <div className="row">
-                    <figure className="product-main-image">
-                      <img
-                        id="product-zoom"
-                        src="/assets/images/products/single/1.jpg"
-                        data-zoom-image="assets/images/products/single/1-big.jpg"
-                        alt="product image"
-                      />
-                      <div
-                        id="btn-product-gallery"
-                        className="btn-product-gallery"
-                      >
-                        <i className="icon-arrows" />
-                      </div>
-                    </figure>
-                    <div
-                      id="product-zoom-gallery"
-                      className="product-image-gallery"
-                    >
-                      <a
-                        className="product-gallery-item active"
-                        href="#"
-                        data-image="assets/images/products/single/1.jpg"
-                        data-zoom-image="assets/images/products/single/1-big.jpg"
-                      >
-                        <img
-                          src="/assets/images/products/single/1-small.jpg"
-                          alt="Dark yellow lace"
-                        />
-                      </a>
-                      <a
-                        className="product-gallery-item"
-                        href="#"
-                        data-image="assets/images/products/single/2-big.jpg"
-                        data-zoom-image="assets/images/products/single/2-big.jpg"
-                      >
-                        <img
-                          src="/assets/images/products/single/2-small.jpg"
-                          alt="Dark yellow lace"
-                        />
-                      </a>
-                      <a
-                        className="product-gallery-item"
-                        href="#"
-                        data-image="assets/images/products/single/3-big.jpg"
-                        data-zoom-image="assets/images/products/single/3-big.jpg"
-                      >
-                        <img
-                          src="/assets/images/products/single/3-small.jpg"
-                          alt="Dark yellow lace"
-                        />
-                      </a>
-                      <a
-                        className="product-gallery-item"
-                        href="#"
-                        data-image="assets/images/products/single/4-big.jpg"
-                        data-zoom-image="assets/images/products/single/4-big.jpg"
-                      >
-                        <img
-                          src="/assets/images/products/single/4-small.jpg"
-                          alt="Dark yellow lace"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="product-details">
-                  <h1 className="product-title">Dark yellow lace</h1>
-                  <div className="ratings-container">
-                    <div className="ratings">
-                      <div className="ratings-val" style={{ width: "80%" }} />
-                    </div>
-                    <a
-                      className="ratings-text"
-                      href="#product-review-link"
-                      id="review-link"
-                    >
-                      ( 2 Reviews )
-                    </a>
-                  </div>
-                  <div className="product-price"> $84.00 </div>
-                  <div className="product-content">
-                    <p>
-                      Sed egestas, ante et vulputate volutpat, eros pede semper
-                      est, vitae luctus metus libero eu augue. Morbi purus
-                      libero, faucibus adipiscing. Sed lectus.{" "}
-                    </p>
-                  </div>
-                  <div className="details-filter-row details-row-size">
-                    <label>Color:</label>
-                    <div className="product-nav product-nav-dots">
-                      <div
-                        className="product-nav-item active"
-                        style={{ background: "#e2e2e2" }}
-                      >
-                        <span className="sr-only">Color name</span>
-                      </div>
-                      <div
-                        className="product-nav-item"
-                        style={{ background: "#333333" }}
-                      >
-                        <span className="sr-only">Color name</span>
-                      </div>
-                      <div
-                        className="product-nav-item"
-                        style={{ background: "#f2bc9e" }}
-                      >
-                        <span className="sr-only">Color name</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="details-filter-row details-row-size">
-                    <label htmlFor="qty">Qty:</label>
-                    <div className="product-details-quantity">
-                      <input
-                        type="number"
-                        id="qty"
-                        className="form-control"
-                        defaultValue={1}
-                        min={1}
-                        max={10}
-                        step={1}
-                        data-decimals={0}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="product-details-action">
-                    <a href="#" className="btn-product btn-cart">
-                      <span>add to cart</span>
-                    </a>
-                    <div className="details-action-wrapper">
-                      <a
-                        href="#"
-                        className="btn-product btn-wishlist"
-                        title="Wishlist"
-                      >
-                        <span>Add to Wishlist</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="product-details-footer">
-                    <div className="product-cat">
-                      <span>Category:</span>
-                      <a href="#">Women</a>, <a href="#">Dresses</a>,{" "}
-                      <a href="#">Yellow</a>
-                    </div>
-                    <div className="social-icons social-icons-sm">
-                      <span className="social-label">Share:</span>
-                      <a
-                        href="#"
-                        className="social-icon"
-                        title="Facebook"
-                        target="_blank"
-                      >
-                        <i className="icon-facebook-f" />
-                      </a>
-                      <a
-                        href="#"
-                        className="social-icon"
-                        title="Twitter"
-                        target="_blank"
-                      >
-                        <i className="icon-twitter" />
-                      </a>
-                      <a
-                        href="#"
-                        className="social-icon"
-                        title="Instagram"
-                        target="_blank"
-                      >
-                        <i className="icon-instagram" />
-                      </a>
-                      <a
-                        href="#"
-                        className="social-icon"
-                        title="Pinterest"
-                        target="_blank"
-                      >
-                        <i className="icon-pinterest" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="product-details-tab">
-            <ul className="nav nav-pills justify-content-center" role="tablist">
-              <li className="nav-item">
-                <a
-                  className="nav-link active"
-                  id="product-desc-link"
-                  data-toggle="tab"
-                  href="#product-desc-tab"
-                  role="tab"
-                  aria-controls="product-desc-tab"
-                  aria-selected="true"
-                >
-                  Description
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  id="product-shipping-link"
-                  data-toggle="tab"
-                  href="#product-shipping-tab"
-                  role="tab"
-                  aria-controls="product-shipping-tab"
-                  aria-selected="false"
-                >
-                  Shipping &amp; Returns
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  id="product-review-link"
-                  data-toggle="tab"
-                  href="#product-review-tab"
-                  role="tab"
-                  aria-controls="product-review-tab"
-                  aria-selected="false"
-                >
-                  Reviews (2)
-                </a>
-              </li>
-            </ul>
-            <div className="tab-content">
-              <div
-                className="tab-pane fade show active"
-                id="product-desc-tab"
-                role="tabpanel"
-                aria-labelledby="product-desc-link"
-              >
-                <div className="product-desc-content">
-                  <h3>Product Information</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Donec odio. Quisque volutpat mattis eros. Nullam malesuada
-                    erat ut turpis. Suspendisse urna viverra non, semper
-                    suscipit, posuere a, pede. Donec nec justo eget felis
-                    facilisis fermentum. Aliquam porttitor mauris sit amet orci.
-                    Aenean dignissim pellentesque felis. Phasellus ultrices
-                    nulla quis nibh. Quisque a lectus. Donec consectetuer ligula
-                    vulputate sem tristique cursus.{" "}
-                  </p>
-                  <ul>
-                    <li>
-                      Nunc nec porttitor turpis. In eu risus enim. In vitae
-                      mollis elit.{" "}
-                    </li>
-                    <li>Vivamus finibus vel mauris ut vehicula.</li>
-                    <li>
-                      Nullam a magna porttitor, dictum risus nec, faucibus
-                      sapien.
-                    </li>
-                  </ul>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Donec odio. Quisque volutpat mattis eros. Nullam malesuada
-                    erat ut turpis. Suspendisse urna viverra non, semper
-                    suscipit, posuere a, pede. Donec nec justo eget felis
-                    facilisis fermentum. Aliquam porttitor mauris sit amet orci.
-                    Aenean dignissim pellentesque felis. Phasellus ultrices
-                    nulla quis nibh. Quisque a lectus. Donec consectetuer ligula
-                    vulputate sem tristique cursus.{" "}
-                  </p>
-                </div>
-              </div>
-              <div
-                className="tab-pane fade"
-                id="product-shipping-tab"
-                role="tabpanel"
-                aria-labelledby="product-shipping-link"
-              >
-                <div className="product-desc-content">
-                  <h3>Delivery &amp; returns</h3>
-                  <p>
-                    We deliver to over 100 countries around the world. For full
-                    details of the delivery options we offer, please view our{" "}
-                    <a href="#">Delivery information</a>
-                    <br /> We hope you’ll love every purchase, but if you ever
-                    need to return an item you can do so within a month of
-                    receipt. For full details of how to make a return, please
-                    view our <a href="#">Returns information</a>
-                  </p>
-                </div>
-              </div>
-              <div
-                className="tab-pane fade"
-                id="product-review-tab"
-                role="tabpanel"
-                aria-labelledby="product-review-link"
-              >
-                <div className="reviews">
-                  <h3>Reviews (2)</h3>
-                  <div className="review">
-                    <div className="row no-gutters">
-                      <div className="col-auto">
-                        <h4>
-                          <a href="#">Samanta J.</a>
-                        </h4>
-                        <div className="ratings-container">
-                          <div className="ratings">
-                            <div
-                              className="ratings-val"
-                              style={{ width: "80%" }}
-                            />
-                          </div>
-                        </div>
-                        <span className="review-date">6 days ago</span>
-                      </div>
-                      <div className="col">
-                        <h4>Good, perfect size</h4>
-                        <div className="review-content">
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Ducimus cum dolores assumenda asperiores
-                            facilis porro reprehenderit animi culpa atque
-                            blanditiis commodi perspiciatis doloremque,
-                            possimus, explicabo, autem fugit beatae quae
-                            voluptas!
-                          </p>
-                        </div>
-                        <div className="review-action">
-                          <a href="#">
-                            <i className="icon-thumbs-up" />
-                            Helpful (2){" "}
-                          </a>
-                          <a href="#">
-                            <i className="icon-thumbs-down" />
-                            Unhelpful (0){" "}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="review">
-                    <div className="row no-gutters">
-                      <div className="col-auto">
-                        <h4>
-                          <a href="#">John Doe</a>
-                        </h4>
-                        <div className="ratings-container">
-                          <div className="ratings">
-                            <div
-                              className="ratings-val"
-                              style={{ width: "100%" }}
-                            />
-                          </div>
-                        </div>
-                        <span className="review-date">5 days ago</span>
-                      </div>
-                      <div className="col">
-                        <h4>Very good</h4>
-                        <div className="review-content">
-                          <p>
-                            Sed, molestias, tempore? Ex dolor esse iure hic
-                            veniam laborum blanditiis laudantium iste amet. Cum
-                            non voluptate eos enim, ab cumque nam, modi, quas
-                            iure illum repellendus, blanditiis perspiciatis
-                            beatae!
-                          </p>
-                        </div>
-                        <div className="review-action">
-                          <a href="#">
-                            <i className="icon-thumbs-up" />
-                            Helpful (0){" "}
-                          </a>
-                          <a href="#">
-                            <i className="icon-thumbs-down" />
-                            Unhelpful (0){" "}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProductTop
+            {...renderProduct}
+            productTopProps={productTopProps}
+            onAddToCart={onAddToCart}
+            renderReviews={renderReviews}
+            handleWishList={handleWishList}
+          />
+          <ProductTabs {...renderProduct} productTabsProps={productTabsProps} />
         </div>
       </div>
     </main>

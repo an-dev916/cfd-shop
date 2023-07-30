@@ -10,15 +10,16 @@ import { MainProvider } from "../components/MainContext";
 import MobileMenuContainer from "../components/MobileMenuContainer";
 import Overlay from "../components/Overlay";
 import { LOCAL_STORAGE } from "../constants/localStorage";
+import ReviewModal from "../pages/dashboard/MyOrder/ReviewModal";
 import authService from "../services/authService";
-import { getProfile } from "../store/reducers/authenReducer";
+import { orderService } from "../services/orderService";
+import { authActions, getProfile } from "../store/reducers/authenReducer";
 import { getCart } from "../store/reducers/cartReducer";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   // const profile = useSelector((state) => state.auth.profile);
-
   useEffect(() => {
     document.body.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [pathname]);
@@ -81,6 +82,8 @@ const MainLayout = () => {
       <MobileMenuContainer />
       {/* Modal */}
       <AuthenModal />
+      {/* Review Modal */}
+      <ReviewModal />
     </MainProvider>
   );
 };

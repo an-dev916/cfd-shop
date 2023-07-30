@@ -872,8 +872,8 @@ export const libFunc = () => {
     // Select Colors
     let itemColor = $(".product-nav-dots .product-nav-item");
     itemColor.on("click", function () {
-      itemColor.removeClass("active");
-      $(this).addClass("active");
+      // itemColor.removeClass("active");
+      // $(this).addClass("active");
     });
   });
 };

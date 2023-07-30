@@ -11,4 +11,16 @@ export const orderService = {
   checkout(payload = {}) {
     return instance.post("/orders", payload);
   },
+  postReview(payload = {}) {
+    return instance.post("/reviews", payload);
+  },
+  getReview(productID = "") {
+    return instance.get(`/reviews/product${productID ? "/" + productID : ""}`);
+  },
+  postWhiteList(payload = {}) {
+    return instance.post("/customer/white-list", payload);
+  },
+  deleteWhiteList(payload = {}) {
+    return instance.delete("/customer/white-list", { data: payload });
+  },
 };

@@ -5,6 +5,7 @@ import Input from "../../components/Input";
 import { zoneService } from "../../services/zoneService";
 import cn from "classnames";
 import "./style.css";
+import { removeAccents } from "../../utils/format";
 
 const CheckoutBillings = ({ form, profile }) => {
   const [provinces, setProvinces] = useState([]);

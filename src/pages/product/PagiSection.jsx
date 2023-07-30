@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const PagiSection = ({ products }) => {
-  const pagesShow = 5;
   const [currPage, setCurrPage] = useState(1);
 
   const productDisplay = 6;

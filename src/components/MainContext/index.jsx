@@ -20,6 +20,18 @@ const MainContext = createContext({});
 
 export const MainProvider = ({ children }) => {
   const [isAuthenModalOpen, setIsAuthenModalOpen] = useState(false);
+  // Handle Review Modal
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const showReviewModal = () => {
+    setIsReviewOpen(true);
+  };
+  const hideReviewModal = () => {
+    setIsReviewOpen(false);
+  };
+
+  const [checkReview, setCheckReview] = useState({});
+
+  // General
   const [renderForm, setRenderForm] = useState(AUTHEN_TYPES.login);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -88,6 +100,11 @@ export const MainProvider = ({ children }) => {
       value={{
         setIsAuthenModalOpen,
         isAuthenModalOpen,
+        setCheckReview,
+        checkReview,
+        isReviewOpen,
+        showReviewModal,
+        hideReviewModal,
         setRenderForm,
         renderForm,
         onOpenModal,

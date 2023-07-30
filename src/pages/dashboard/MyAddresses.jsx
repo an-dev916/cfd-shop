@@ -39,7 +39,7 @@ const MyAddresses = () => {
             </div>
           </div>
         </div>
-        <div className="col-lg-6">
+        {/* <div className="col-lg-6">
           <div className="card card-dashboard">
             <div className="card-body">
               <h3 className="card-title">Shipping Address</h3>
@@ -52,7 +52,7 @@ const MyAddresses = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

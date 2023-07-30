@@ -17,9 +17,12 @@ const Input = forwardRef(
 
     return (
       <div className="form-group" style={style || {}}>
-        <label htmlFor={inputProps?.name || ""}>
-          {label} {required && <span>*</span>}
-        </label>
+        {label && (
+          <label htmlFor={inputProps?.name || ""}>
+            {label} {required && <span>*</span>}
+          </label>
+        )}
+
         {renderInput?.({ ...inputProps, ref: ref }) || (
           <input
             ref={ref}

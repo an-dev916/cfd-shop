@@ -6,6 +6,7 @@ import { getCart } from "./cartReducer";
 
 const initialState = {
   profile: null,
+  listOrders: null,
 };
 
 export const { reducer: authReducer, actions: authActions } = createSlice({
@@ -20,6 +21,9 @@ export const { reducer: authReducer, actions: authActions } = createSlice({
     },
     setProfile: (state, action) => {
       state.profile = action.payload;
+    },
+    setListOrders: (state, action) => {
+      state.listOrders = action.payload;
     },
   },
 });

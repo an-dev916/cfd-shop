@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { PATHS } from "../../constants/pathnames";
 
 const DealsOutletSection = () => {
   return (
@@ -155,10 +157,13 @@ const DealsOutletSection = () => {
           </div>
         </div>
         <div className="more-container text-center mt-3 mb-0">
-          <a href="#" className="btn btn-outline-dark-2 btn-round btn-more">
+          <Link
+            to={PATHS.PRODUCT}
+            className="btn btn-outline-dark-2 btn-round btn-more"
+          >
             <span>Shop more</span>
             <i className="icon-long-arrow-right" />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { Modal, Select } from "antd";
 import axios from "axios";
 import produce from "immer";
 import React, { useEffect, useState } from "react";
@@ -28,6 +28,7 @@ const MyInfo = () => {
 
   // General
   const { onUpdate } = useDashboard();
+  const { confirm } = Modal;
   const profile = useSelector((state) => state.auth.profile);
   const {
     register,
@@ -145,7 +146,20 @@ const MyInfo = () => {
 
   const onSubmit = (data) => {
     console.log("data", data);
-    onUpdate(data);
+    confirm({
+      title: "Update your profile?",
+      content: (
+        <>
+          <p>Please check your information correctly!</p>
+        </>
+      ),
+      onOk() {
+        onUpdate(data);
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
   };
 
   // useEffect(() => {

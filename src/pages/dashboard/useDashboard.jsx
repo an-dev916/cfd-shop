@@ -7,10 +7,12 @@ import { authActions, update } from "../../store/reducers/authenReducer";
 
 const useDashboard = () => {
   const profile = useSelector((state) => state.auth.profile);
+  const orderInfo = useSelector((state) => state.order.orderInfo);
   const [profileInfo, setProfileInfo] = useState({});
   const { onLogout } = useAuthen();
   const dispatch = useDispatch();
 
+  console.log("orderInfo :>> ", orderInfo);
   const onUpdate = async (data) => {
     console.log("data :>> ", data);
     if (data?.email) {

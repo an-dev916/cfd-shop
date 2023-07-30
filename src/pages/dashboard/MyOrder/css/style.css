@@ -1,0 +1,35 @@
+.ant-collapse-content-box .orderItem .info .wrapInfo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* .ant-collapse-header-text {
+  display: flex;
+} */
+
+/* .orderItem .orderPrice {
+  margin-top: 30px;
+} */
+
+.ant-collapse-content-box .wrapInfo.price {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ant-collapse-content-box .wrapInfo.price strong {
+  color: #fcb941;
+}
+
+.reviewOrder .nav-link.active {
+  cursor: pointer;
+  padding: 0 0 0 20px;
+  margin: 0;
+  margin-top: 14px;
+  transition: 0.3s;
+  width: fit-content;
+  border: none;
+}
+
+.reviewOrder .nav-link.active:hover {
+  opacity: 0.5;
+}

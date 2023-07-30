@@ -5,10 +5,11 @@ import { PATHS } from "../../constants/pathnames";
 import cartService from "../../services/cartService";
 import { updateCart } from "../../store/reducers/cartReducer";
 import { formatCurrency } from "../../utils/format";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
+import { THUNK_STATUS } from "../../constants/thunkStatus";
 const HeaderMiddle = () => {
   const { confirm } = Modal;
-  const { cartInfo } = useSelector((state) => state.cart);
+  const { cartInfo, updateStatus } = useSelector((state) => state.cart);
   console.log("cartInfo header:>> ", cartInfo);
   const { product, quantity, subTotal } = cartInfo || {};
   console.log("product header:>> ", product);
@@ -18,7 +19,34 @@ const HeaderMiddle = () => {
 
   const dispatch = useDispatch();
 
-  const onDeleteProduct = async (id, index) => {
+  const onUpdateCart = async (id, index) => {
+    try {
+      const newProducts = product
+        ?.filter((item) => item.id !== id)
+        .map((item) => item.id);
+
+      const newQuantity = [...quantity];
+      newQuantity.splice(index, 1);
+
+      const newPayload = {
+        ...cartInfo,
+        product: newProducts,
+        quantity: newQuantity,
+      };
+      if (updateStatus !== THUNK_STATUS.pending) {
+        const res = await dispatch(updateCart(newPayload)).unwrap();
+        console.log("res middle :>> ", res);
+        // message.config({
+        //   top: 62,
+        // });
+        message.success("Removed product succesfully!");
+      }
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
+
+  const onDeleteProduct = (id, index) => {
     if (id) {
       confirm({
         title: "Do you want to delete this item?",
@@ -29,24 +57,7 @@ const HeaderMiddle = () => {
           </>
         ),
         onOk() {
-          try {
-            const newProducts = product
-              ?.filter((item) => item.id !== id)
-              .map((item) => item.id);
-
-            const newQuantity = [...quantity];
-            newQuantity.splice(index, 1);
-
-            const newPayload = {
-              ...cartInfo,
-              product: newProducts,
-              quantity: newQuantity,
-            };
-            const res = dispatch(updateCart(newPayload)).unwrap();
-            console.log("res middle :>> ", res);
-          } catch (error) {
-            console.log("error :>> ", error);
-          }
+          onUpdateCart(id, index);
         },
         onCancel() {
           console.log("Cancel");
@@ -132,7 +143,7 @@ const HeaderMiddle = () => {
                       <div
                         className="product"
                         style={{ maxHeight: "94px", overflow: "hidden" }}
-                        key={slug || index}
+                        key={id || index}
                       >
                         <div className="product-cart-details">
                           <h4 className="product-title">

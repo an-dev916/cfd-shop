@@ -1,0 +1,13 @@
+.details-filter-row.details-row-size
+  .product-details-quantity
+  .cart-product-quantity {
+  width: 100%;
+}
+
+.product-gallery-vertical .product-main-image img,
+.product-gallery-vertical .product-image-gallery .product-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
