@@ -116,15 +116,16 @@ const ProductCard = ({ product }) => {
           );
 
           if (matchIndex > -1) {
-            const res = await orderService.deleteWhiteList(payload);
-            const removeRes = res?.data?.data;
-            if (removeRes) {
-              const profileRes = await authService.getProfile();
-              if (profileRes?.data?.data) {
-                dispatch(authActions.setProfile(profileRes?.data?.data));
-                message.success("Removed from Wishlist!");
-              }
-            }
+            message.warning("You added this product to wishlist!");
+            // const res = await orderService.deleteWhiteList(payload);
+            // const removeRes = res?.data?.data;
+            // if (removeRes) {
+            //   const profileRes = await authService.getProfile();
+            //   if (profileRes?.data?.data) {
+            //     dispatch(authActions.setProfile(profileRes?.data?.data));
+            //     message.success("Removed from Wishlist!");
+            //   }
+            // }
           } else {
             const res = await orderService.postWhiteList(payload);
             const addRes = res?.data?.data;
