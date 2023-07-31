@@ -89,6 +89,7 @@ const Pagination = ({ page, total = 0, limit = 0, onPageChange }) => {
 
         {pageList?.length > 0 &&
           pageList?.map((item) => {
+            console.log("list pagi", { item, currPage });
             return (
               <li
                 className={`page-item ${item === currPage ? "active" : ""}`}
