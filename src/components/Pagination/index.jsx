@@ -39,6 +39,7 @@ const Pagination = ({ page, total = 0, limit = 0, onPageChange }) => {
     }
     return list;
   }, [currPage, totalPages]);
+  console.log("pageList :>> ", pageList);
 
   const onNext = () => {
     const nextPage = currPage + 1;

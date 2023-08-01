@@ -99,7 +99,9 @@ const useBlog = () => {
   };
 
   //   Tags Props
-
+  const filterTagBlogs = () => {
+    blogs?.filter((item, index) => item);
+  };
   const tagsProps = {
     tagsList,
   };

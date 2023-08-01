@@ -1,0 +1,31 @@
+.page-content .entry-body .entry-media {
+  min-height: 400px;
+}
+
+.entry-content.editor-content .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.entry-content.editor-content .image img {
+  width: 80%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-content .related-posts .owl-carousel .owl-item .entry-media a {
+  height: 376px;
+  overflow: hidden;
+}
+
+.page-content .related-posts .owl-carousel .owl-item .entry-media a img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.3s;
+}
+
+.page-content .related-posts .owl-carousel .owl-item .entry-media a img:hover {
+  transform: scale(1.05);
+}

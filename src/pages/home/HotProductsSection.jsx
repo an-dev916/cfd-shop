@@ -1,3 +1,4 @@
+import cn from "classnames";
 import React, { useEffect, useState } from "react";
 import OwlCarousel from "react-owl-carousel";
 import { NavLink } from "react-router-dom";
@@ -82,9 +83,12 @@ const HotProductsSection = ({
       </ul>
       <div className="tab-content tab-content-carousel">
         <div
-          className={`tab-pane p-0 fade ${
-            renderProducts.length > 0 ? "show active" : ""
-          }`}
+          // className={`tab-pane p-0 fade ${
+          //   renderProducts.length > 0 ? "show active" : ""
+          // }`}
+          className={cn("tab-pane p-0 fade", {
+            "show active": renderProducts.length > 0,
+          })}
           id="products-featured-tab"
           role="tabpanel"
           aria-labelledby="products-featured-link"

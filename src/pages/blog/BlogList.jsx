@@ -35,7 +35,6 @@ const BlogList = ({ blogs, blogsLoading, blogsError }) => {
       </div>
     );
   }
-  console.log("blogs :>> ", blogs);
   return (
     <div className="entry-container max-col-2" data-layout="fitRows">
       {blogs?.length > 0 &&
@@ -61,7 +60,10 @@ const BlogList = ({ blogs, blogsLoading, blogsError }) => {
             <div className="entry-item col-sm-6" key={id || index}>
               <article className="entry entry-grid">
                 <figure className="entry-media">
-                  <Link to={PATHS.BLOG_SINGLE} style={{ height: 426 }}>
+                  <Link
+                    to={`${PATHS.BLOG}${slug ? "/" + slug : ""}`}
+                    style={{ height: 426 }}
+                  >
                     <img src={image} alt={slug} />
                   </Link>
                 </figure>
@@ -75,7 +77,9 @@ const BlogList = ({ blogs, blogsLoading, blogsError }) => {
                     </span>
                   </div>
                   <h2 className="entry-title">
-                    <Link to={PATHS.BLOG_SINGLE}>{name}</Link>
+                    <Link to={`${PATHS.BLOG}${slug ? "/" + slug : ""}`}>
+                      {name}
+                    </Link>
                   </h2>
                   <div className="entry-content">
                     {parse(cleanHTML)}
@@ -85,7 +89,10 @@ const BlogList = ({ blogs, blogsLoading, blogsError }) => {
                       Suspendisse potenti. Sed egestas vulputate ...
                     </p> */}
                   </div>
-                  <Link to={PATHS.BLOG_SINGLE} className="read-more">
+                  <Link
+                    to={`${PATHS.BLOG}${slug ? "/" + slug : ""}`}
+                    className="read-more"
+                  >
                     Read More
                   </Link>
                 </div>

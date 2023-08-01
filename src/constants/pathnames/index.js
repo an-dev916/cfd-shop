@@ -1,5 +1,5 @@
 const PRODUCT_PATH = "/products";
-const BLOG_PATH = "/blog";
+const BLOG_PATH = "/blogs";
 const DASHBOARD_PATH = "/dashboard";
 
 export const PATHS = {

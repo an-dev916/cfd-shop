@@ -1,4 +1,3 @@
-import { message } from "antd";
 import React from "react";
 
 const BlogTags = ({ tagsList }) => {
@@ -10,21 +9,7 @@ const BlogTags = ({ tagsList }) => {
         {tagsList?.length > 0 &&
           tagsList?.map((tag, index) => {
             const { name, id } = tag || {};
-            return (
-              <a
-                key={id || index}
-                onClick={() => {
-                  message.config({
-                    top: 62,
-                  });
-                  message.info(
-                    "This feature is in development, please try again later!"
-                  );
-                }}
-              >
-                {name}
-              </a>
-            );
+            return <a key={id || index}>{name}</a>;
           })}
         {/* <a href="#">fashion</a>
         <a href="#">style</a>
