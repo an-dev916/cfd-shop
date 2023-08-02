@@ -31,6 +31,7 @@ export const useProductDetail = () => {
     avrReviews,
     setImgActive,
     imgActive,
+    whiteList,
   };
 
   // Product Tabs

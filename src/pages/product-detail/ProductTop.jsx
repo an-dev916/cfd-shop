@@ -31,11 +31,18 @@ const ProductTop = ({
     avrReviews,
     setImgActive,
     imgActive,
+    whiteList,
   } = productTopProps || {};
+  console.log("whiteList :>> ", whiteList);
 
   const cleanHTML = DOMPurify.sanitize(description, {
     USE_PROFILES: { html: true },
   });
+
+  const productAddedWhiteList = whiteList?.findIndex(
+    (item) => item.id === productID
+  );
+  console.log("productAddedWhiteList :>> ", productAddedWhiteList);
 
   return (
     <div className="product-details-top">
@@ -219,10 +226,16 @@ const ProductTop = ({
               <div className="details-action-wrapper">
                 <a
                   onClick={() => handleWishList(productID)}
-                  className="btn-product btn-wishlist"
+                  className={cn("btn-product btn-wishlist", {
+                    active: productAddedWhiteList > -1,
+                  })}
                   title="Wishlist"
                 >
-                  <span>Add to Wishlist</span>
+                  <span>
+                    {productAddedWhiteList > -1
+                      ? "Remove from Wishlist"
+                      : "Add to Wishlist"}
+                  </span>
                 </a>
               </div>
             </div>

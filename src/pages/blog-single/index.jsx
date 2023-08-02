@@ -34,8 +34,8 @@ const BlogSingle = () => {
               <BlogArticle {...articleBlogProps} />
               <BlogNav {...navBlogProps} />
               <BlogRelated {...relatedBlogProps} />
-              <BlogComment />
-              <BlogReply />
+              {/* <BlogComment />
+              <BlogReply /> */}
             </div>
             {/* <aside className="col-lg-3">
               <div className="sidebar">

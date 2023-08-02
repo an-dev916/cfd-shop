@@ -11,3 +11,21 @@
   object-fit: cover;
   object-position: center;
 }
+
+.active.btn-wishlist::before {
+  color: #fcb941;
+  animation: wishListColor 0.5s;
+}
+
+.active.btn-wishlist span {
+  color: #fcb941;
+}
+
+@keyframes wishListColor {
+  from {
+    color: red;
+  }
+  to {
+    color: #fcb941;
+  }
+}
