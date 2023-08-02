@@ -13,8 +13,15 @@ import AdsBox from "./AdsBox";
 import BlogTags from "./BlogTags";
 
 const Blog = () => {
-  const { blogListProps, pagiProps, catesProps, searchProps, tagsProps } =
-    useBlog();
+  const {
+    blogListProps,
+    pagiProps,
+    catesProps,
+    searchProps,
+    tagsProps,
+    renderBlogsByTag,
+  } = useBlog();
+
   console.log("pagiProps :>> ", pagiProps);
   return (
     <main className="main">
@@ -26,7 +33,7 @@ const Blog = () => {
           <h1 className="page-title">Blog</h1>
         </div>
       </div>
-      <Breadcrumb>
+      <Breadcrumb className="border-0 mb-0">
         <Breadcrumb.Item>
           <Link to={PATHS.HOME}>Home</Link>
         </Breadcrumb.Item>
@@ -259,7 +266,7 @@ const Blog = () => {
                 </div>
               </div> */}
               <BlogList {...blogListProps} />
-              <Pagination {...pagiProps} />
+              {renderBlogsByTag?.length > 0 || <Pagination {...pagiProps} />}
               {/* <nav aria-label="Page navigation">
                 <ul className="pagination">
                   <li className="page-item disabled">

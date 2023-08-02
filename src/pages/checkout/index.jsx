@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Breadcrumb from "../../components/Breadcrumb";
+import { PATHS } from "../../constants/pathnames";
 import CheckoutBillings from "./CheckoutBillings";
 import CheckoutCoupoun from "./CheckoutCoupoun";
 import CheckoutSummary from "./CheckoutSummary";
@@ -16,21 +19,15 @@ const Checkout = () => {
           <h1 className="page-title">Checkout</h1>
         </div>
       </div>
-      <nav aria-label="breadcrumb" className="breadcrumb-nav">
-        <div className="container">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
-            </li>
-            <li className="breadcrumb-item">
-              <a href="product.html">Product</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              Checkout
-            </li>
-          </ol>
-        </div>
-      </nav>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to={PATHS.HOME}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link to={PATHS.PRODUCT}>Product</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item isActive>Checkout</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="page-content">
         <div className="checkout">
           <div className="container">

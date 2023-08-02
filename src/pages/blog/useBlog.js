@@ -4,6 +4,7 @@ import useQuery from "../../hooks/useQuery";
 import blogService from "../../services/blogService";
 import { useEffect, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
+import { message } from "antd";
 const BLOGS_LIMIT = 4;
 const useBlog = () => {
   // Handle URL Search
@@ -40,7 +41,7 @@ const useBlog = () => {
     blogService.getBlogs(query || `?limit=${BLOGS_LIMIT}`)
   );
   const { blogs, pagination: blogPagi } = blogsData || {};
-
+  console.log("blogs :>> ", blogs);
   const {
     data: catesData,
     loading: catesLoading,
@@ -56,7 +57,15 @@ const useBlog = () => {
   const { blogs: tagsList } = tagsData || {};
 
   //   Blog List Props
-  const blogListProps = { blogsLoading, blogsError, blogs, blogsRefetch };
+  const [renderBlogsByTag, setRenderBlogsByTag] = useState([]);
+  const blogListProps = {
+    blogsLoading,
+    blogsError,
+    blogs,
+    renderBlogsByTag,
+    blogsRefetch,
+    BLOGS_LIMIT,
+  };
 
   // Pagination Props
   const onPageChange = (page) => {
@@ -99,16 +108,34 @@ const useBlog = () => {
   };
 
   //   Tags Props
-  const filterTagBlogs = () => {
-    blogs?.filter((item, index) => item);
+  const handleClickTag = async (tagID) => {
+    try {
+      const res = await blogService.getBlogs();
+      const blogRes = res?.data?.data?.blogs;
+      if (blogRes) {
+        console.log("blogRes :>> ", blogRes);
+
+        const filterBlogsByTag = blogRes?.filter((item) =>
+          item?.tags?.includes(tagID)
+        );
+        setRenderBlogsByTag(filterBlogsByTag);
+        // setSearchParams(`?tag=${tagID}&limit=${BLOGS_LIMIT}`);
+      }
+    } catch (error) {
+      console.log("error :>> ", error);
+      message.error("Something wrong, please try again!");
+    }
   };
+
   const tagsProps = {
+    handleClickTag,
     tagsList,
   };
 
   useEffect(() => {
     blogsRefetch?.(search);
-  }, [JSON.stringify(search)]);
+    setRenderBlogsByTag([]);
+  }, [search]);
 
   useEffect(() => {
     if (typeof debouncedValue === "string") {
@@ -122,6 +149,7 @@ const useBlog = () => {
     catesProps,
     searchProps,
     tagsProps,
+    renderBlogsByTag,
   };
 };
 

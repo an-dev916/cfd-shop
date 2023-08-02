@@ -10,7 +10,7 @@ const useBlogSingle = () => {
     loading: blogSingleLoading,
     error: blogSingleError,
     refetch: blogSingleRefetch,
-  } = useQuery(() => blogService.getBlogBySlug(slug));
+  } = useQuery(() => blogService.getBlogBySlug(slug), [slug]);
   console.log("blogSingleData :>> ", blogSingleData);
 
   const {
@@ -19,6 +19,14 @@ const useBlogSingle = () => {
     error: tagsError,
   } = useQuery(blogService.getBlogTags);
   const { blogs: tags } = tagsData || {};
+
+  const {
+    data: allBlogsData,
+    loading: allBlogsLoading,
+    error: allBlogsError,
+  } = useQuery(blogService.getBlogs);
+  const { blogs: allBlogs } = allBlogsData || {};
+  console.log("allBlogs :>> ", allBlogs);
 
   // Article Props
   const articleBlogProps = {
@@ -29,14 +37,15 @@ const useBlogSingle = () => {
   };
 
   // Navigation Props
+  const [renderNavBlogs, setRenderNavBlogs] = useState({});
+
   const navBlogProps = {
     articleData: blogSingleData || {},
-    blogSingleRefetch,
+    renderNavBlogs,
   };
 
   // Blog Related Props
   const [renderRelated, setRenderRelated] = useState([]);
-  // const [navBlog, setNavBlog] = useState({})
   const {
     data: relatedBlogData,
     loading: relatedBlogLoading,
@@ -51,9 +60,38 @@ const useBlogSingle = () => {
 
   const relatedBlogProps = { renderRelated };
 
+  // useEffect(() => {
+
+  //   blogSingleRefetch?.(slug);
+
+  // }, [slug]);
+
   useEffect(() => {
-    blogSingleRefetch?.(slug);
-  }, [slug]);
+    const findBlogIndex = allBlogs?.findIndex(
+      (blog) => blog.id === blogSingleData?.id
+    );
+    if (findBlogIndex > -1) {
+      console.log("findBlogIndex :>> ", findBlogIndex);
+      console.log("allBlogs :>> ", allBlogs);
+      let nextBlog = allBlogs[findBlogIndex + 1];
+      let prevBlog = allBlogs[findBlogIndex - 1];
+
+      if (findBlogIndex + 1 >= allBlogs?.length) {
+        nextBlog = allBlogs[allBlogs?.length - 1];
+      }
+
+      if (findBlogIndex - 1 <= 0) {
+        prevBlog = allBlogs[0];
+      }
+
+      setRenderNavBlogs({
+        nextBlog,
+        prevBlog,
+      });
+
+      console.log("findBlogIndex :>> ", findBlogIndex);
+    }
+  }, [JSON.stringify(allBlogs), blogSingleData?.id]);
 
   useEffect(() => {
     if (relatedBlogData?.blogs) {

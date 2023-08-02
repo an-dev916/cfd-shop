@@ -1,20 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Breadcrumb from "../../components/Breadcrumb";
+import { PATHS } from "../../constants/pathnames";
 
 const About = () => {
   return (
     <main className="main">
-      <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
-        <div className="container">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              About us
-            </li>
-          </ol>
-        </div>
-      </nav>
+      <Breadcrumb className="border-0 mb-0">
+        <Breadcrumb.Item>
+          <Link to={PATHS.HOME}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item isActive>About</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="container">
         <div
           className="page-header page-header-big text-center"

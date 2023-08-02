@@ -1,7 +1,7 @@
 import { message } from "antd";
 import React from "react";
 
-const BlogTags = ({ tagsList }) => {
+const BlogTags = ({ tagsList, handleClickTag }) => {
   console.log("tagsList :>> ", tagsList);
   return (
     <div className="widget">
@@ -11,17 +11,7 @@ const BlogTags = ({ tagsList }) => {
           tagsList?.map((tag, index) => {
             const { name, id } = tag || {};
             return (
-              <a
-                key={id || index}
-                onClick={() => {
-                  message.config({
-                    top: 62,
-                  });
-                  message.info(
-                    "This feature is in development, please try again later!"
-                  );
-                }}
-              >
+              <a key={id || index} onClick={() => handleClickTag(id)}>
                 {name}
               </a>
             );
