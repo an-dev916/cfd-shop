@@ -1,3 +1,4 @@
+import { Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { SHIPPING_TYPES } from "../../constants/shippingTypes";
 import { THUNK_STATUS } from "../../constants/thunkStatus";
@@ -5,6 +6,7 @@ import { updateCart } from "../../store/reducers/cartReducer";
 
 export const useCartPage = () => {
   const { cartInfo, updateStatus } = useSelector((state) => state.cart);
+  const { confirm } = Modal;
   const dispatch = useDispatch();
   console.log("cartInfo :>> ", cartInfo);
   const { product, quantity, subTotal, total } = cartInfo || {};
@@ -29,6 +31,26 @@ export const useCartPage = () => {
       }
     } catch (error) {
       console.log("error :>> ", error);
+    }
+  };
+
+  const handleDeleteProduct = async (id, index) => {
+    if (id) {
+      confirm({
+        title: "Do you want to delete this item?",
+        content: (
+          <>
+            <p>{`${product[index]?.name || ""}`}</p>
+            <p>{`${quantity[index]} x $${product[index]?.price}`}</p>
+          </>
+        ),
+        onOk() {
+          onDeleteProduct(id, index);
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
     }
   };
 
@@ -85,6 +107,7 @@ export const useCartPage = () => {
     tableCartQuantities: quantity,
     onDeleteProduct,
     onUpdateQuantity,
+    handleDeleteProduct,
   };
 
   const summaryProps = {

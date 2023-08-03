@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 
 const InputNumberStyle = styled.input`
@@ -20,10 +20,11 @@ const QuantityInput = ({
   step = 1,
   value,
   onChange,
+  handleDeleteProduct,
   ...inputProps
 }) => {
   const [renderValue, setRenderValue] = useState(value || "1");
-  console.log("renderValue :>> ", renderValue);
+
   // useEffect(() => {
   //   const myTimeout = setTimeout(() => {
   //     if (value !== renderValue) {
@@ -51,9 +52,14 @@ const QuantityInput = ({
   };
 
   const onDecrease = () => {
+    console.log("onDecrease:>> ", { renderValue, step });
     const value = modifyValue(Number(renderValue) - Number(step));
-    setRenderValue(value);
-    onChange?.(value);
+    if (Number(renderValue) - step < 1) {
+      handleDeleteProduct?.();
+    } else {
+      setRenderValue(value);
+      onChange?.(value);
+    }
   };
 
   const modifyValue = (value) => {

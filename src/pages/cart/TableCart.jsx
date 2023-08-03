@@ -11,6 +11,7 @@ const TableCart = ({
   tableCartQuantities = [],
   onDeleteProduct,
   onUpdateQuantity,
+  handleDeleteProduct,
 }) => {
   const { cartInfo, updateStatus } = useSelector((state) => state.cart);
   console.log("cartInfo :>> ", cartInfo);
@@ -103,6 +104,8 @@ const TableCart = ({
                     className="cart-product-quantity"
                     value={amount}
                     onChange={(value) => onUpdateQuantity?.(value, index)}
+                    onDeleteProduct={() => onDeleteProduct(id, index)}
+                    handleDeleteProduct={() => handleDeleteProduct(id, index)}
                   />
                   {/* <div className="cart-product-quantity">
                     <input
@@ -123,7 +126,7 @@ const TableCart = ({
                 <td className="remove-col">
                   <button
                     className="btn-remove"
-                    onClick={() => onDeleteProduct(id, index)}
+                    onClick={() => handleDeleteProduct(id, index)}
                   >
                     <i className="icon-close" />
                   </button>
