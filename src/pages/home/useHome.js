@@ -19,6 +19,7 @@ const useHome = () => {
   const brandsProps = {
     brands,
   };
+
   // Products List
   const {
     data: productsData,

@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
+import Breadcrumb from "../components/Breadcrumb";
 import { PATHS } from "../constants/pathnames";
 import useDashboard from "../pages/dashboard/useDashboard";
 
@@ -15,18 +16,12 @@ const DashboardLayout = () => {
           <h1 className="page-title">My Account</h1>
         </div>
       </div>
-      <nav aria-label="breadcrumb" className="breadcrumb-nav mb-3">
-        <div className="container">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              My Account
-            </li>
-          </ol>
-        </div>
-      </nav>
+      <Breadcrumb className="mb-3">
+        <Breadcrumb.Item>
+          <Link to={PATHS.HOME}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item isActive>My Account</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="page-content">
         <div className="dashboard">
           <div className="container">

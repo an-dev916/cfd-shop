@@ -33,3 +33,16 @@
 .reviewOrder .nav-link.active:hover {
   opacity: 0.5;
 }
+
+@media screen and (max-width: 991px) {
+  .tab-content .ant-collapse-content-box .table-mobile .product-col .product {
+    justify-content: start;
+  }
+}
+
+.tab-content .ant-collapse-content-box .table-mobile .product-info__res {
+  margin-top: 10px;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}

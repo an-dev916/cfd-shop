@@ -7,14 +7,34 @@ import { authActions } from "../../../store/reducers/authenReducer";
 
 const useMyOrder = () => {
   const [reviewRate, setReviewRate] = useState(3);
+  const [renderListOrders, setRenderListOrders] = useState({});
+  console.log("renderListOrders :>> ", renderListOrders);
   const { showReviewModal, setCheckReview } = useAuthen();
 
   const listOrders = useSelector((state) => state.auth.listOrders);
   const onReviewSubmit = (reviewPayload) => {
     console.log("reviewPayload :>> ", reviewPayload);
   };
+
+  const handleShowMore = () => {
+    console.log("listOrders :>> ", listOrders);
+    if (!renderListOrders?.expanded) {
+      setRenderListOrders({
+        ...renderListOrders,
+        expanded: true,
+        itemsToShow: listOrders?.orders?.length,
+      });
+    } else {
+      setRenderListOrders({
+        ...renderListOrders,
+        expanded: false,
+        itemsToShow: 3,
+      });
+    }
+  };
   const orderProps = {
     listOrders,
+    renderListOrders,
     onReviewSubmit,
     setReviewRate,
     reviewRate,
@@ -27,9 +47,19 @@ const useMyOrder = () => {
     reviewRate,
   };
 
+  useEffect(() => {
+    setRenderListOrders({
+      listOrders,
+      itemsToShow: 3,
+      expanded: false,
+    });
+  }, [JSON.stringify(listOrders)]);
+
   return {
     reviewProps,
     orderProps,
+    renderListOrders,
+    handleShowMore,
   };
 };
 

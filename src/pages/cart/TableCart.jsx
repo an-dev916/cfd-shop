@@ -104,7 +104,6 @@ const TableCart = ({
                     className="cart-product-quantity"
                     value={amount}
                     onChange={(value) => onUpdateQuantity?.(value, index)}
-                    onDeleteProduct={() => onDeleteProduct(id, index)}
                     handleDeleteProduct={() => handleDeleteProduct(id, index)}
                   />
                   {/* <div className="cart-product-quantity">

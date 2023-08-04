@@ -13,13 +13,14 @@ const HotProductsSection = ({
 }) => {
   const [renderProducts, setRenderProducts] = useState([]);
 
-  console.log("renderProducts :>> ", renderProducts);
-
+  console.log("ddd renderProducts :>> ", renderProducts);
+  console.log("ddd hotProducts :>> ", hotProducts);
   const onChangTab = (tab) => {
     if (tab !== selectedHotTab) {
       setRenderProducts([]);
     }
     setTimeout(() => onSelectHotTab?.(tab), 300);
+    // onSelectHotTab?.(tab);
   };
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const HotProductsSection = ({
             id="products-featured-link"
             onClick={() => onChangTab(HOT_TABS.featured)}
             data-toggle="tab"
-            href="#products-featured-tab"
+            // href="#products-featured-tab"
             role="tab"
             aria-controls="products-featured-tab"
             aria-selected="true"
@@ -56,7 +57,7 @@ const HotProductsSection = ({
             id="products-sale-link"
             onClick={() => onChangTab(HOT_TABS.onSale)}
             data-toggle="tab"
-            href="#products-sale-tab"
+            // href="#products-sale-tab"
             role="tab"
             aria-controls="products-sale-tab"
             aria-selected="false"
@@ -72,7 +73,7 @@ const HotProductsSection = ({
             id="products-top-link"
             onClick={() => onChangTab(HOT_TABS.topRated)}
             data-toggle="tab"
-            href="#products-top-tab"
+            // href="#products-top-tab"
             role="tab"
             aria-controls="products-top-tab"
             aria-selected="false"
@@ -100,9 +101,9 @@ const HotProductsSection = ({
               margin={20}
               responsive={{
                 0: {
-                  items: 2,
+                  items: 1,
                 },
-                600: {
+                480: {
                   items: 2,
                 },
                 992: {

@@ -1,10 +1,31 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import { PATHS } from "../../constants/pathnames";
+import { useAuthen } from "../MainContext";
+import MenuCates from "./MenuCates";
+import MenuMain from "./MenuMain";
+import MenuSocials from "./MenuSocials";
+import useMobileMenu from "./useMobileMenu";
 
 const MobileMenuContainer = () => {
+  const { onHideMenu } = useAuthen();
+  const { menuCatesProps } = useMobileMenu();
+  const menuList = document.querySelector(".mobile-menu");
+  if (menuList) {
+    const menuItem = menuList.querySelectorAll("li");
+    menuItem.forEach((item) =>
+      item.addEventListener("click", (e) => {
+        console.log("testclick");
+        onHideMenu();
+        e.preventDefaul();
+      })
+    );
+  }
+
   return (
     <div className="mobile-menu-container">
       <div className="mobile-menu-wrapper">
-        <span className="mobile-menu-close">
+        <span className="mobile-menu-close" onClick={onHideMenu}>
           <i className="icon-close" />
         </span>
         <form action="#" method="get" className="mobile-search">
@@ -52,82 +73,10 @@ const MobileMenuContainer = () => {
           </li>
         </ul>
         <div className="tab-content">
-          <div
-            className="tab-pane fade show active"
-            id="mobile-menu-tab"
-            role="tabpanel"
-            aria-labelledby="mobile-menu-link"
-          >
-            <nav className="mobile-nav">
-              <ul className="mobile-menu">
-                <li className="active">
-                  <a href="index.html">Home</a>
-                </li>
-                <li>
-                  <a href="about.html">About Us</a>
-                </li>
-                <li>
-                  <a href="product.html">Product</a>
-                </li>
-                <li>
-                  <a href="blog.html">Blog</a>
-                </li>
-                <li>
-                  <a href="contact.html">Contact Us</a>
-                </li>
-              </ul>
-            </nav>
-            {/* End .mobile-nav */}
-          </div>
-          {/* .End .tab-pane */}
-          <div
-            className="tab-pane fade"
-            id="mobile-cats-tab"
-            role="tabpanel"
-            aria-labelledby="mobile-cats-link"
-          >
-            <nav className="mobile-cats-nav">
-              <ul className="mobile-cats-menu">
-                <li>
-                  <a className="mobile-cats-lead" href="#">
-                    TV
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Computers</a>
-                </li>
-                <li>
-                  <a href="#">Tablets &amp; Cell Phones</a>
-                </li>
-                <li>
-                  <a href="#">Smartwatches</a>
-                </li>
-                <li>
-                  <a href="#">Accessories</a>
-                </li>
-              </ul>
-              {/* End .mobile-cats-menu */}
-            </nav>
-            {/* End .mobile-cats-nav */}
-          </div>
-          {/* .End .tab-pane */}
+          <MenuMain />
+          <MenuCates {...menuCatesProps} />
         </div>
-        {/* End .tab-content */}
-        <div className="social-icons">
-          <a href="#" className="social-icon" target="_blank" title="Facebook">
-            <i className="icon-facebook-f" />
-          </a>
-          <a href="#" className="social-icon" target="_blank" title="Twitter">
-            <i className="icon-twitter" />
-          </a>
-          <a href="#" className="social-icon" target="_blank" title="Instagram">
-            <i className="icon-instagram" />
-          </a>
-          <a href="#" className="social-icon" target="_blank" title="Youtube">
-            <i className="icon-youtube" />
-          </a>
-        </div>
-        {/* End .social-icons */}
+        <MenuSocials />
       </div>
       {/* End .mobile-menu-wrapper */}
     </div>

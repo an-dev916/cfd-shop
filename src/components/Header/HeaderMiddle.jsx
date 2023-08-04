@@ -1,76 +1,30 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { PATHS } from "../../constants/pathnames";
-import cartService from "../../services/cartService";
-import { updateCart } from "../../store/reducers/cartReducer";
 import { formatCurrency } from "../../utils/format";
-import { message, Modal } from "antd";
-import { THUNK_STATUS } from "../../constants/thunkStatus";
-const HeaderMiddle = () => {
-  const { confirm } = Modal;
-  const { cartInfo, updateStatus } = useSelector((state) => state.cart);
-  console.log("cartInfo header:>> ", cartInfo);
+import cn from "classnames";
+
+const HeaderMiddle = ({
+  cartInfo,
+  onDeleteProduct,
+  isMenuOpen,
+  onShowMenu,
+}) => {
   const { product, quantity, subTotal } = cartInfo || {};
-  console.log("product header:>> ", product);
   const totalQuantity = quantity?.reduce((curr, next, index) => {
     return Number(curr) + Number(next);
   }, 0);
-
-  const dispatch = useDispatch();
-
-  const onUpdateCart = async (id, index) => {
-    try {
-      const newProducts = product
-        ?.filter((item) => item.id !== id)
-        .map((item) => item.id);
-
-      const newQuantity = [...quantity];
-      newQuantity.splice(index, 1);
-
-      const newPayload = {
-        ...cartInfo,
-        product: newProducts,
-        quantity: newQuantity,
-      };
-      if (updateStatus !== THUNK_STATUS.pending) {
-        const res = await dispatch(updateCart(newPayload)).unwrap();
-        console.log("res middle :>> ", res);
-        // message.config({
-        //   top: 62,
-        // });
-        message.success("Removed product succesfully!");
-      }
-    } catch (error) {
-      console.log("error :>> ", error);
-    }
-  };
-
-  const onDeleteProduct = (id, index) => {
-    if (id) {
-      confirm({
-        title: "Do you want to delete this item?",
-        content: (
-          <>
-            <p>{`${product[index]?.name || ""}`}</p>
-            <p>{`${quantity[index]} x $${product[index]?.price}`}</p>
-          </>
-        ),
-        onOk() {
-          onUpdateCart(id, index);
-        },
-        onCancel() {
-          console.log("Cancel");
-        },
-      });
-    }
-  };
 
   return (
     <div className="header-middle sticky-header">
       <div className="container">
         <div className="header-left">
-          <button className="mobile-menu-toggler">
+          <button
+            className={cn("mobile-menu-toggler", {
+              active: isMenuOpen,
+            })}
+            onClick={onShowMenu}
+          >
             <span className="sr-only">Toggle mobile menu</span>
             <i className="icon-bars" />
           </button>

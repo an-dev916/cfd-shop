@@ -18,6 +18,7 @@ const OrderDetail = ({
   setCheckReview,
   viewport,
 }) => {
+  console.log("viewport :>> ", viewport);
   return (
     <div className="orderItem">
       <div className="info">
@@ -93,7 +94,34 @@ const OrderDetail = ({
                       </h3>
                     </div>
                   </td>
-                  <td className="price-col text-center">
+                  {!(viewport.width <= 991) ? (
+                    <>
+                      <td className="price-col text-center">
+                        ${formatCurrency(price)}
+                      </td>
+                      <td className="quantity-col text-center">
+                        {quantity[index]}
+                      </td>
+                      <td className="total-col text-center">
+                        $
+                        {Number(
+                          formatCurrency(price) * (Number(quantity[index]) || 0)
+                        )}
+                      </td>
+                    </>
+                  ) : (
+                    <td className="product-info__res">
+                      <span>Price: ${formatCurrency(price)}</span>
+                      <span>Quantity: {quantity[index]}</span>
+                      <span className="total-col text-center">
+                        Total: $
+                        {Number(
+                          formatCurrency(price) * (Number(quantity[index]) || 0)
+                        )}
+                      </span>
+                    </td>
+                  )}
+                  {/* <td className="price-col text-center">
                     ${formatCurrency(price)}
                   </td>
                   <td className="quantity-col text-center">
@@ -104,7 +132,7 @@ const OrderDetail = ({
                     {Number(
                       formatCurrency(price) * (Number(quantity[index]) || 0)
                     )}
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}

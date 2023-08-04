@@ -119,6 +119,7 @@ const useBlog = () => {
           item?.tags?.includes(tagID)
         );
         setRenderBlogsByTag(filterBlogsByTag);
+        document.body.scrollIntoView({ behavior: "smooth", block: "start" });
         // setSearchParams(`?tag=${tagID}&limit=${BLOGS_LIMIT}`);
       }
     } catch (error) {
@@ -135,6 +136,7 @@ const useBlog = () => {
   useEffect(() => {
     blogsRefetch?.(search);
     setRenderBlogsByTag([]);
+    document.body.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [search]);
 
   useEffect(() => {

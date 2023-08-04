@@ -6,7 +6,8 @@ const Brands = ({ brands }) => {
     <div className="container">
       <OwlCarousel
         className="owl-carousel mt-5 mb-5 owl-simple"
-        nav
+        nav={false}
+        dots={false}
         margin={10}
         responsive={{
           0: {

@@ -19,7 +19,21 @@ import { cartActions, getCart } from "../../store/reducers/cartReducer";
 const MainContext = createContext({});
 
 export const MainProvider = ({ children }) => {
+  // Handle Authen Modal
   const [isAuthenModalOpen, setIsAuthenModalOpen] = useState(false);
+
+  // Handle Mobile Menu Active
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const onHideMenu = () => {
+    document.body.classList.remove("mmenu-active");
+    setIsMenuOpen(false);
+  };
+
+  const onShowMenu = () => {
+    document.body.classList.add("mmenu-active");
+    setIsMenuOpen(true);
+  };
+
   // Handle Review Modal
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const showReviewModal = () => {
@@ -98,6 +112,10 @@ export const MainProvider = ({ children }) => {
   return (
     <MainContext.Provider
       value={{
+        onShowMenu,
+        onHideMenu,
+        setIsMenuOpen,
+        isMenuOpen,
         setIsAuthenModalOpen,
         isAuthenModalOpen,
         setCheckReview,

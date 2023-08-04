@@ -1,7 +1,9 @@
 import React from "react";
+import { useAuthen } from "../MainContext";
 
 const Overlay = () => {
-  return <div className="mobile-menu-overlay" />;
+  const { onHideMenu } = useAuthen();
+  return <div className="mobile-menu-overlay" onClick={onHideMenu} />;
 };
 
 export default Overlay;

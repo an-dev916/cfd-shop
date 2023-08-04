@@ -4,64 +4,78 @@ import "./css/style.css";
 import OrderDetail from "./OrderDetail";
 import useViewport from "../../../hooks/useViewport";
 
-const OrderItem = ({ listOrders, showReviewModal, setCheckReview }) => {
-  const { orders } = listOrders || {};
-  console.log("orders :>> ", orders);
-  console.log("render");
-  const onChange = (key) => {
-    console.log(key);
-  };
-  const viewport = useViewport();
-  console.log("viewport :>> ", viewport);
+function reverseArr(input) {
+  if (input?.length) {
+    let ret = [];
+    for (let i = input.length - 1; i >= 0; i--) {
+      ret.push(input[i]);
+    }
+    return ret;
+  }
+}
 
-  const orderInfo = orders?.map((order, index) => {
-    const orderTime = new Date(order?.updatedAt).toLocaleString();
-    return {
-      key: index,
-      label:
-        viewport.width > 576 ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span>
-              ORDER ID: <strong>{order?.id}</strong>
-            </span>
-            <span>{`(${orderTime})`}</span>
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span>
-              ORDER ID: <strong>{order?.id}</strong>
-              <br />
-              <span>{`(${orderTime})`}</span>
-            </span>
-          </div>
+const OrderItem = ({
+  // listOrders,
+  showReviewModal,
+  setCheckReview,
+  renderListOrders,
+}) => {
+  const { listOrders, itemsToShow } = renderListOrders || {};
+  const { orders } = listOrders || {};
+  const viewport = useViewport();
+  const reverseListOrders = reverseArr(orders);
+
+  const orderInfo = reverseListOrders
+    ?.slice(0, itemsToShow)
+    ?.map((order, index) => {
+      return {
+        key: index,
+        label: <OrderItemHeading order={order} viewport={viewport} />,
+        children: (
+          <OrderDetail
+            viewport={viewport}
+            {...order}
+            showReviewModal={showReviewModal}
+            setCheckReview={setCheckReview}
+          />
         ),
-      children: (
-        <OrderDetail
-          viewport={viewport}
-          {...order}
-          showReviewModal={showReviewModal}
-          setCheckReview={setCheckReview}
-        />
-      ),
-    };
-  });
+      };
+    });
+
+  return <Collapse items={orderInfo} defaultActiveKey={["0"]} />;
+};
+
+const OrderItemHeading = ({ order, viewport }) => {
+  const orderTime = new Date(order?.updatedAt).toLocaleString();
+  if (viewport.width <= 576) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <span>
+          ORDER ID: <strong>{order?.id}</strong>
+          <br />
+          <span>{`(${orderTime})`}</span>
+        </span>
+      </div>
+    );
+  }
 
   return (
-    <Collapse
-      items={orderInfo}
-      defaultActiveKey={[(orders?.length - 1).toString()]}
-      onChange={onChange}
-    />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <span>
+        ORDER ID: <strong>{order?.id}</strong>
+      </span>
+      <span>{`(${orderTime})`}</span>
+    </div>
   );
 };
 

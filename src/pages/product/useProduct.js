@@ -1,11 +1,12 @@
 import queryString from "query-string";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { PRODUCTS_LIMIT } from "../../constants/productsLimit";
 import { SORT_OPTIONS } from "../../constants/sortOptions";
 import useQuery from "../../hooks/useQuery";
 import { productService } from "../../services/productSevice";
 
-const PRODUCTS_LIMIT = 6;
+// const PRODUCTS_LIMIT = 6;
 
 export const useProduct = () => {
   // Get Search String (Ex: ?key1=value1&key2=value2...)

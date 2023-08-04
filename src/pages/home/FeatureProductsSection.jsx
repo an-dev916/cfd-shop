@@ -153,9 +153,9 @@ const FeatureProductsSection = ({
               margin={20}
               responsive={{
                 0: {
-                  items: 2,
+                  items: 1,
                 },
-                600: {
+                480: {
                   items: 2,
                 },
                 992: {

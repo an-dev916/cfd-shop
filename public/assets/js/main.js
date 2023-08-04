@@ -72,30 +72,30 @@ $(document).ready(function () {
   }
 
   // Mobile Menu Toggle - Show & Hide
-  $(".mobile-menu-toggler").on("click", function (e) {
-    $body.toggleClass("mmenu-active");
-    $(this).toggleClass("active");
-    e.preventDefault();
-  });
+  // $(".mobile-menu-toggler").on("click", function (e) {
+  //   $body.toggleClass("mmenu-active");
+  //   $(this).toggleClass("active");
+  //   e.preventDefault();
+  // });
 
-  $(".mobile-menu-overlay, .mobile-menu-close").on("click", function (e) {
-    $body.removeClass("mmenu-active");
-    $(".menu-toggler").removeClass("active");
-    e.preventDefault();
-  });
+  // $(".mobile-menu-overlay, .mobile-menu-close").on("click", function (e) {
+  //   $body.removeClass("mmenu-active");
+  //   $(".menu-toggler").removeClass("active");
+  //   e.preventDefault();
+  // });
 
   // Add Mobile menu icon arrows to items with children
-  $(".mobile-menu")
-    .find("li")
-    .each(function () {
-      var $this = $(this);
+  // $(".mobile-menu")
+  //   .find("li")
+  //   .each(function () {
+  //     var $this = $(this);
 
-      if ($this.find("ul").length) {
-        $("<span/>", {
-          class: "mmenu-btn",
-        }).appendTo($this.children("a"));
-      }
-    });
+  //     if ($this.find("ul").length) {
+  //       $("<span/>", {
+  //         class: "mmenu-btn",
+  //       }).appendTo($this.children("a"));
+  //     }
+  //   });
 
   // Mobile Menu toggle children menu
   $(".mmenu-btn").on("click", function (e) {
