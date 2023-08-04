@@ -7,6 +7,14 @@ import { useAuthen } from "../MainContext";
 const useMobileMenu = () => {
   const { search } = useLocation();
   const { onHideMenu } = useAuthen();
+  const handleHideMenu = () => {
+    onHideMenu();
+    document.body.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  // Main Menu Props
+  const mainMenuProps = {
+    handleHideMenu,
+  };
   // Categories Menu Props
   const {
     data: catesData,
@@ -15,12 +23,13 @@ const useMobileMenu = () => {
   } = useQuery(productService.getCates);
   const cates = catesData?.products || [];
   const menuCatesProps = {
+    handleHideMenu,
     onHideMenu,
     search,
     cates,
     catesList: cates.map((item) => item.name),
   };
-  return { menuCatesProps };
+  return { menuCatesProps, mainMenuProps };
 };
 
 export default useMobileMenu;

@@ -118,6 +118,10 @@ export const useProduct = () => {
     productsFetch?.(search);
   }, [search, JSON.stringify(products)]);
 
+  useEffect(() => {
+    document.body.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [search]);
+
   return {
     pagiProps,
     productsListProps,

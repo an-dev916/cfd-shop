@@ -17,6 +17,7 @@ const MobileMenuContainer = () => {
       item.addEventListener("click", (e) => {
         console.log("testclick");
         onHideMenu();
+        document.body.scrollIntoView({ behavior: "smooth", block: "start" });
         e.preventDefaul();
       })
     );

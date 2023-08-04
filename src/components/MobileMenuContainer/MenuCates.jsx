@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 import { PATHS } from "../../constants/pathnames";
 import { PRODUCTS_LIMIT } from "../../constants/productsLimit";
 
-const MenuCates = ({ catesList, cates, search, onHideMenu }) => {
+const MenuCates = ({
+  catesList,
+  cates,
+  search,
+  onHideMenu,
+  handleHideMenu,
+}) => {
   console.log("catesList :>> ", catesList);
   return (
     <div
@@ -21,7 +27,7 @@ const MenuCates = ({ catesList, cates, search, onHideMenu }) => {
                 <li>
                   <Link
                     to={`${PATHS.PRODUCT}?category=${cates[index]?.id}&limit=${PRODUCTS_LIMIT}&page=1`}
-                    onClick={onHideMenu}
+                    onClick={handleHideMenu}
                     className={cn({
                       "mobile-cats-lead": search?.includes(
                         `${cates[index]?.id}`
