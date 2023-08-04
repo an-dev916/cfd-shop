@@ -8,8 +8,8 @@ const HeaderTop = ({ onOpenModal, profile, onLogout }) => {
     <div className="header-top">
       <div className="container">
         <div className="header-left">
-          <a href="tel:0989596912">
-            <i className="icon-phone" /> Hotline: 098 9596 912{" "}
+          <a href="tel:0938166302">
+            <i className="icon-phone" /> Hotline: 093 8166 302{" "}
           </a>
         </div>
         <div className="header-right">

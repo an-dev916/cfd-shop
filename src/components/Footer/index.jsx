@@ -22,7 +22,7 @@ const Footer = () => {
                 </p>
                 <div className="widget-call">
                   <i className="icon-phone" /> Got Question? Call us 24/7{" "}
-                  <a href="tel:#">098 9596 912</a>
+                  <a href="tel:#">093 8166 302</a>
                 </div>
               </div>
             </div>
