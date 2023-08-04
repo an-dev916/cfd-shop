@@ -101,7 +101,11 @@ const HeaderMiddle = ({
                       >
                         <div className="product-cart-details">
                           <h4 className="product-title">
-                            <a href="product-detail.html">{name}</a>
+                            <Link
+                              to={`${PATHS.PRODUCT}${slug ? "/" + slug : ""}`}
+                            >
+                              {name}
+                            </Link>
                           </h4>
                           <span className="cart-product-info">
                             <span className="cart-product-qty">
@@ -111,8 +115,8 @@ const HeaderMiddle = ({
                           </span>
                         </div>
                         <figure className="product-image-container">
-                          <a
-                            href="product-detail.html"
+                          <Link
+                            to={`${PATHS.PRODUCT}${slug ? "/" + slug : ""}`}
                             className="product-image"
                           >
                             <img
@@ -125,7 +129,7 @@ const HeaderMiddle = ({
                                 objectFit: "cover",
                               }}
                             />
-                          </a>
+                          </Link>
                         </figure>
                         <a
                           href="#"
