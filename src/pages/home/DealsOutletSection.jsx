@@ -1,8 +1,17 @@
+import { message } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import { PATHS } from "../../constants/pathnames";
 
 const DealsOutletSection = () => {
+  message.config({
+    top: 62,
+  });
+  const handleClick = () => {
+    message.warning(
+      "The api has not returned data for this section, please try again later!"
+    );
+  };
   return (
     <div className="bg-light deal-container pt-7 pb-7 mb-5">
       <div className="container">
@@ -52,7 +61,7 @@ const DealsOutletSection = () => {
                       <span className="product-label label-circle label-sale">
                         Sale
                       </span>
-                      <a href="product-detail.html">
+                      <a onClick={handleClick}>
                         <img
                           src="/assets/images/demos/demo-3/products/product-5.jpg"
                           alt="Product image"
@@ -61,7 +70,7 @@ const DealsOutletSection = () => {
                       </a>
                       <div className="product-action-vertical">
                         <a
-                          href="#"
+                          onClick={handleClick}
                           className="btn-product-icon btn-wishlist btn-expandable"
                         >
                           <span>add to wishlist</span>
@@ -69,7 +78,7 @@ const DealsOutletSection = () => {
                       </div>
                       <div className="product-action product-action-dark">
                         <a
-                          href="#"
+                          onClick={handleClick}
                           className="btn-product btn-cart"
                           title="Add to cart"
                         >
@@ -79,7 +88,7 @@ const DealsOutletSection = () => {
                     </figure>
                     <div className="product-body">
                       <h3 className="product-title">
-                        <a href="product-detail.html">
+                        <a onClick={handleClick}>
                           Canon - EOS 5D Mark IV DSLR Camera
                         </a>
                       </h3>
@@ -105,7 +114,7 @@ const DealsOutletSection = () => {
                       <span className="product-label label-circle label-sale">
                         Sale
                       </span>
-                      <a href="product-detail.html">
+                      <a onClick={handleClick}>
                         <img
                           src="/assets/images/demos/demo-3/products/product-6.jpg"
                           alt="Product image"
@@ -114,7 +123,7 @@ const DealsOutletSection = () => {
                       </a>
                       <div className="product-action-vertical">
                         <a
-                          href="#"
+                          onClick={handleClick}
                           className="btn-product-icon btn-wishlist btn-expandable"
                         >
                           <span>add to wishlist</span>
@@ -122,7 +131,7 @@ const DealsOutletSection = () => {
                       </div>
                       <div className="product-action product-action-dark">
                         <a
-                          href="#"
+                          onClick={handleClick}
                           className="btn-product btn-cart"
                           title="Add to cart"
                         >
@@ -132,7 +141,7 @@ const DealsOutletSection = () => {
                     </figure>
                     <div className="product-body">
                       <h3 className="product-title">
-                        <a href="product-detail.html">
+                        <a onClick={handleClick}>
                           Apple - Smart Keyboard Folio for 11-inch iPad Pro
                         </a>
                       </h3>
