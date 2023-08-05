@@ -54,7 +54,7 @@ const HeaderMiddle = ({
           </ul>
         </nav>
         <div className="header-right">
-          <div className="header-search">
+          {/* <div className="header-search">
             <a href="#" className="search-toggle" role="button" title="Search">
               <i className="icon-search" />
             </a>
@@ -73,7 +73,7 @@ const HeaderMiddle = ({
                 />
               </div>
             </form>
-          </div>
+          </div> */}
           <div className="dropdown cart-dropdown">
             <Link
               to={PATHS.CART}

@@ -129,13 +129,16 @@ export const useCheckout = () => {
 
   const onCheckout = async (e) => {
     e.preventDefault();
+    const formValues = form.getValues();
+    const { province, district, ward } = formValues || "";
     if (!!!cartInfo?.shipping?.typeShip) {
       handleSubmit()();
       message.error("Please select your shipping type");
     } else if (!!!currPayment) {
       handleSubmit()();
-      console.log("test");
       message.error("Please select your payment method");
+    } else if (!province || !district || !ward) {
+      handleSubmit()();
     } else {
       confirm({
         title: "Confirm your order?",
@@ -145,6 +148,7 @@ export const useCheckout = () => {
           </>
         ),
         onOk() {
+          // console.log("form values:>> ", formValues);
           handleSubmit(handleCheckout)();
         },
         onCancel() {

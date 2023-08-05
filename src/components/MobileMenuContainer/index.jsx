@@ -29,7 +29,7 @@ const MobileMenuContainer = () => {
         <span className="mobile-menu-close" onClick={onHideMenu}>
           <i className="icon-close" />
         </span>
-        <form action="#" method="get" className="mobile-search">
+        {/* <form action="#" method="get" className="mobile-search">
           <label htmlFor="mobile-search" className="sr-only">
             Search
           </label>
@@ -44,7 +44,7 @@ const MobileMenuContainer = () => {
           <button className="btn btn-primary" type="submit">
             <i className="icon-search" />
           </button>
-        </form>
+        </form> */}
         <ul className="nav nav-pills-mobile nav-border-anim" role="tablist">
           <li className="nav-item">
             <a

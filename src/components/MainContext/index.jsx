@@ -103,7 +103,11 @@ export const MainProvider = ({ children }) => {
           onLogin({ email: data?.email, password: data?.password });
         }
       } catch (error) {
-        message.error("Something wrong!");
+        if (error?.response?.status === 403) {
+          message.warning("This account existed, try another!");
+        } else {
+          message.error("Something wrong!");
+        }
         console.log("error :>> ", error);
       }
     }

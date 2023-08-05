@@ -94,8 +94,27 @@ const CheckoutBillings = ({ form, profile }) => {
   const {
     register,
     control,
+    watch,
+    setValue,
     formState: { errors },
   } = form || {};
+
+  const selectedProvince = watch("province");
+  const selectedDistrict = watch("district");
+  const selectedWard = watch("ward");
+  console.log("all zone :>> ", [
+    selectedProvince,
+    selectedDistrict,
+    selectedWard,
+  ]);
+  const clearDistWard = () => {
+    setValue("district", "");
+    setValue("ward", "");
+  };
+
+  const clearWard = () => {
+    setValue("ward", "");
+  };
 
   useEffect(() => {
     if (profile?.province) {
@@ -191,6 +210,7 @@ const CheckoutBillings = ({ form, profile }) => {
                   onChange={(e) => {
                     field.onChange(e);
                     handleProvince(e);
+                    clearDistWard();
                   }}
                   placeholder="Select your City..."
                   filterOption={(input, option) =>
@@ -236,6 +256,7 @@ const CheckoutBillings = ({ form, profile }) => {
                   onChange={(e) => {
                     field.onChange(e);
                     handleDistrict(e);
+                    clearWard();
                   }}
                   placeholder="Select your District..."
                   filterOption={(input, option) =>

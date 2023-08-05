@@ -1,19 +1,14 @@
 import { Modal, Select } from "antd";
-import axios from "axios";
-import produce from "immer";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import useQuery from "../../hooks/useQuery";
 import { zoneService } from "../../services/zoneService";
 import { removeAccents } from "../../utils/format";
-// import Select from "../../components/Select";
 import useDashboard from "./useDashboard";
 import "./style.css";
 import cn from "classnames";
-import moment from "moment/moment";
 import { localTime } from "../../utils/localTime";
 
 const MyInfo = () => {
@@ -44,8 +39,22 @@ const MyInfo = () => {
       // ward: "",
     },
   });
-  console.log("all error :>> ", errors);
-  console.log("all zone :>> ", [idProvince, idDistrict, idWard]);
+
+  const selectedProvince = watch("province");
+  const selectedDistrict = watch("district");
+  const selectedWard = watch("ward");
+
+  const clearDistWard = () => {
+    setValue("district", "");
+    setValue("ward", "");
+  };
+
+  const clearWard = () => {
+    setValue("ward", "");
+  };
+
+  console.log("all error selectValue:>> ", errors);
+  console.log("all zone selectValue:>> ", [idProvince, idDistrict, idWard]);
   // const provinceChange = (ev) => {
   //   if (ev.target.value) {
   //     const refDistricts = provinces.find((el) =>
@@ -279,8 +288,7 @@ const MyInfo = () => {
                 required: true,
               }}
               render={({ field }) => {
-                console.log("province field", field);
-
+                console.log("selectValue province", field);
                 return (
                   <Select
                     {...field}
@@ -295,6 +303,7 @@ const MyInfo = () => {
                     onChange={(e) => {
                       field.onChange(e);
                       handleProvince(e);
+                      clearDistWard();
                     }}
                     placeholder="Select your City..."
                     filterOption={(input, option) =>
@@ -339,8 +348,7 @@ const MyInfo = () => {
                 required: true,
               }}
               render={({ field }) => {
-                console.log("district field", field);
-
+                console.log("selectValue district", field);
                 return (
                   <Select
                     {...field}
@@ -357,6 +365,7 @@ const MyInfo = () => {
                     onChange={(e) => {
                       field.onChange(e);
                       handleDistrict(e);
+                      clearWard();
                     }}
                     placeholder="Select your District..."
                     filterOption={(input, option) =>
@@ -401,8 +410,7 @@ const MyInfo = () => {
                 required: true,
               }}
               render={({ field }) => {
-                console.log("ward field", field);
-
+                console.log("selectValue ward", field);
                 return (
                   <Select
                     {...field}
