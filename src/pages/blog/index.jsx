@@ -19,6 +19,7 @@ const Blog = () => {
     catesProps,
     searchProps,
     tagsProps,
+    popularProps,
     renderBlogsByTag,
   } = useBlog();
 
@@ -313,7 +314,7 @@ const Blog = () => {
               <div className="sidebar">
                 <BlogSearch {...searchProps} />
                 <BlogCates {...catesProps} />
-                <BlogPopular />
+                <BlogPopular {...popularProps} />
                 <AdsBox />
                 <BlogTags {...tagsProps} />
               </div>

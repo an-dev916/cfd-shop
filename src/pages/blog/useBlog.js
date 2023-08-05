@@ -133,6 +133,16 @@ const useBlog = () => {
     tagsList,
   };
 
+  // Popular Blogs Props
+  const {
+    data: allBlogsData,
+    loading: allBlogsLoading,
+    error: allBlogsError,
+  } = useQuery(blogService.getBlogs);
+  console.log("allBlogsData :>> ", allBlogsData);
+  const [renderPopularBlogs, setRenderPopularBlogs] = useState([]);
+  const popularProps = { renderPopularBlogs };
+
   useEffect(() => {
     blogsRefetch?.(search);
     setRenderBlogsByTag([]);
@@ -145,12 +155,27 @@ const useBlog = () => {
     }
   }, [debouncedValue]);
 
+  useEffect(() => {
+    if (allBlogsData?.blogs?.length > 0) {
+      let modBlogs = [...allBlogsData?.blogs];
+      modBlogs.sort(function (post1, post2) {
+        const timePost1 = new Date(post1.createdAt);
+        const timePost2 = new Date(post2.createdAt);
+        return timePost2 - timePost1;
+      });
+      setRenderPopularBlogs(modBlogs);
+      console.log("popular blogs :>> ", modBlogs);
+    }
+    // setRenderPopularBlogs();
+  }, [JSON.stringify(allBlogsData?.blogs)]);
+
   return {
     blogListProps,
     pagiProps,
     catesProps,
     searchProps,
     tagsProps,
+    popularProps,
     renderBlogsByTag,
   };
 };

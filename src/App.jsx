@@ -3,6 +3,7 @@ import { PATHS } from "./constants/pathnames";
 import "./assets/css/index.css";
 import { lazy, Suspense } from "react";
 import PageLoading from "./components/PageLoading";
+import TestPage from "./pages/testpage";
 
 const PrivateRoute = lazy(() => import("./components/PrivateRoute"));
 const DashboardLayout = lazy(() => import("./layouts/DashboardLayout"));
@@ -49,6 +50,8 @@ function App() {
           <Route path={PATHS.PRODUCT_DETAIL} element={<ProductDetail />} />
           <Route path={PATHS.RETURNS} element={<Returns />} />
           <Route path={PATHS.SHIPPING} element={<Shipping />} />
+          {/* TEST PAGE */}
+          <Route path="/testpage" element={<TestPage />} />
           {/* PROFILE INFO - DASHBOARD*/}
           <Route element={<PrivateRoute redirectPath={PATHS.PRIVACY_POLICY} />}>
             <Route path={PATHS.DASHBOARD.INDEX} element={<DashboardLayout />}>
