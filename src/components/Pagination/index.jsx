@@ -1,107 +1,105 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from 'react'
 
-const PAGE_STEP = 1;
+const PAGE_STEP = 1
 
 const Pagination = ({ page, total = 0, limit = 0, onPageChange }) => {
-  const currPage = Number(page);
+  const currPage = Number(page)
   // Total Pages
   const totalPages = useMemo(() => {
     if (!limit || !total) {
-      return 1;
+      return 1
     }
 
-    return Math.ceil(Number(total) / Number(limit)) || 1;
-  }, [limit, total]);
+    return Math.ceil(Number(total) / Number(limit)) || 1
+  }, [limit, total])
   // Pages List Show
   const pageList = useMemo(() => {
-    let start = currPage - PAGE_STEP;
-    let end = currPage + PAGE_STEP;
+    let start = currPage - PAGE_STEP
+    let end = currPage + PAGE_STEP
 
     if (start <= 0) {
-      start = 1;
-      end = start + PAGE_STEP * 2;
+      start = 1
+      end = start + PAGE_STEP * 2
       if (end > totalPages) {
-        end = totalPages;
+        end = totalPages
       }
     }
 
     if (end >= totalPages) {
-      end = totalPages;
-      start = end - PAGE_STEP * 2;
+      end = totalPages
+      start = end - PAGE_STEP * 2
       if (start < 1) {
-        start = 1;
+        start = 1
       }
     }
 
-    const list = [];
+    const list = []
     for (let index = start; index <= end; index++) {
-      list.push(index);
+      list.push(index)
     }
-    return list;
-  }, [currPage, totalPages]);
-  console.log("pageList :>> ", pageList);
+    return list
+  }, [currPage, totalPages])
 
   const onNext = () => {
-    const nextPage = currPage + 1;
+    const nextPage = currPage + 1
     if (nextPage <= totalPages) {
-      onPageChange(nextPage);
+      onPageChange(nextPage)
     }
-  };
+  }
 
   const onLast = () => {
     if (currPage < totalPages) {
-      onPageChange(totalPages);
+      onPageChange(totalPages)
     }
-  };
+  }
 
   const onPrev = () => {
-    const prevPage = currPage - 1;
+    const prevPage = currPage - 1
     if (prevPage >= 1) {
-      onPageChange(prevPage);
+      onPageChange(prevPage)
     }
-  };
+  }
 
   const onFirst = () => {
-    onPageChange(1);
-  };
+    onPageChange(1)
+  }
 
   return (
-    <nav aria-label="Page navigation">
-      <ul className="pagination justify-content-center">
-        <li className={`page-item ${currPage <= 1 ? "disabled" : ""}`}>
+    <nav aria-label='Page navigation'>
+      <ul className='pagination justify-content-center'>
+        <li className={`page-item ${currPage <= 1 ? 'disabled' : ''}`}>
           <a
-            className="page-link page-link-prev"
-            aria-label="Previous"
+            className='page-link page-link-prev'
+            aria-label='Previous'
             tabIndex={-1}
-            aria-disabled="true"
+            aria-disabled='true'
             onClick={onPrev}
           >
-            <span aria-hidden="true">
-              <i className="icon-long-arrow-left" />
+            <span aria-hidden='true'>
+              <i className='icon-long-arrow-left' />
             </span>
-            Prev{" "}
+            Prev{' '}
           </a>
         </li>
-        <li className={`page-item ${currPage <= 1 ? "disabled" : ""}`}>
-          <a className="page-link" onClick={onFirst}>
-            First{" "}
+        <li className={`page-item ${currPage <= 1 ? 'disabled' : ''}`}>
+          <a className='page-link' onClick={onFirst}>
+            First{' '}
           </a>
         </li>
 
         {pageList?.length > 0 &&
-          pageList?.map((item) => {
-            console.log("list pagi", { item, currPage });
+          pageList?.map((item, index) => {
             return (
               <li
-                className={`page-item ${item === currPage ? "active" : ""}`}
+                className={`page-item ${item === currPage ? 'active' : ''}`}
                 key={item || index}
-                style={item === currPage ? { pointerEvents: "none" } : {}}
-                aria-current="page"
+                style={item === currPage ? { pointerEvents: 'none' } : {}}
+                aria-current='page'
                 onClick={() => onPageChange(item)}
               >
-                <a className="page-link">{item}</a>
+                <a className='page-link'>{item}</a>
               </li>
-            );
+            )
           })}
 
         {/* <li className="page-item active" aria-current="page">
@@ -114,34 +112,34 @@ const Pagination = ({ page, total = 0, limit = 0, onPageChange }) => {
           <a className="page-link">3</a>
         </li> */}
 
-        <li className="page-item-total">of {totalPages}</li>
+        <li className='page-item-total'>of {totalPages}</li>
 
         <li
-          className={`page-item ${currPage == totalPages ? "disabled" : ""}`}
-          style={{ marginLeft: "17px" }}
+          className={`page-item ${currPage == totalPages ? 'disabled' : ''}`}
+          style={{ marginLeft: '17px' }}
           onClick={onLast}
         >
-          <a className="page-link">Last </a>
+          <a className='page-link'>Last </a>
         </li>
 
         <li
-          className={`page-item  ${currPage == totalPages ? "disabled" : ""}`}
+          className={`page-item  ${currPage == totalPages ? 'disabled' : ''}`}
         >
           <a
-            className="page-link page-link-next"
+            className='page-link page-link-next'
             onClick={onNext}
-            aria-label="Next"
+            aria-label='Next'
           >
-            {" "}
-            Next{" "}
-            <span aria-hidden="true">
-              <i className="icon-long-arrow-right" />
+            {' '}
+            Next{' '}
+            <span aria-hidden='true'>
+              <i className='icon-long-arrow-right' />
             </span>
           </a>
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

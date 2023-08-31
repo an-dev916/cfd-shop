@@ -1,76 +1,77 @@
-import React from "react";
-import useQuery from "../../hooks/useQuery";
-import { productService } from "../../services/productSevice";
+import React from 'react'
+import useQuery from '../../hooks/useQuery'
+import { productService } from '../../services/productSevice'
 
 const ProductFilter = ({ cates, onFilterChange, activeCate, isLoading }) => {
-  console.log("cates :>> ", cates);
+  console.log('cates :>> ', cates)
 
   const onCateChange = (id, isChecked) => {
     if (isChecked) {
-      onFilterChange(id);
+      onFilterChange(id)
     } else {
-      onFilterChange("");
+      onFilterChange('')
     }
-  };
+  }
   return (
-    <aside className="col-lg-3 order-lg-first">
-      <div className="sidebar sidebar-shop">
-        <div className="widget widget-clean">
+    <aside className='col-lg-3 order-lg-first'>
+      <div className='sidebar sidebar-shop'>
+        <div className='widget widget-clean'>
           <label>Filters:</label>
           <a
-            className="sidebar-filter-clear"
-            onClick={() => onFilterChange("")}
+            className='sidebar-filter-clear'
+            onClick={() => onFilterChange('')}
           >
             Clean All
           </a>
         </div>
-        <div className="widget widget-collapsible">
-          <h3 className="widget-title">
+        <div className='widget widget-collapsible'>
+          <h3 className='widget-title'>
             <a
-              data-toggle="collapse"
-              href="#widget-1"
-              role="button"
-              aria-expanded="true"
-              aria-controls="widget-1"
+              data-toggle='collapse'
+              href='#widget-1'
+              role='button'
+              aria-expanded='true'
+              aria-controls='widget-1'
             >
-              {" "}
-              Category{" "}
+              {' '}
+              Category{' '}
             </a>
           </h3>
-          <div className="collapse show" id="widget-1">
-            <div className="widget-body">
-              <div className="filter-items filter-items-count">
+          <div className='collapse show' id='widget-1'>
+            <div className='widget-body'>
+              <div className='filter-items filter-items-count'>
                 {cates?.length > 0 &&
                   cates?.map((cate, index) => {
-                    const { name, id } = cate || {};
+                    const { name, id } = cate || {}
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
                     const { data: cateAmount } = useQuery(() =>
                       productService.getProducts(`?category=${id}`)
-                    );
-                    const { products: productsAmount } = cateAmount || {};
+                    )
+                    const { products: productsAmount } = cateAmount || {}
                     return (
-                      <div className="filter-item" key={id || index}>
-                        <div className="custom-control custom-checkbox">
+                      <div className='filter-item' key={id || index}>
+                        <div className='custom-control custom-checkbox'>
                           <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id={`${id || "checkbox"}`}
+                            type='checkbox'
+                            className='custom-control-input'
+                            id={`${id || 'checkbox'}`}
                             checked={activeCate === id}
                             onChange={(value) =>
                               onCateChange(id, value.target.checked)
                             }
                           />
                           <label
-                            className="custom-control-label"
-                            htmlFor={`${id || "checkbox"}`}
+                            className='custom-control-label'
+                            htmlFor={`${id || 'checkbox'}`}
                           >
-                            {name || ""}
+                            {name || ''}
                           </label>
                         </div>
-                        <span className="item-count">
-                          {productsAmount?.length || ""}
+                        <span className='item-count'>
+                          {productsAmount?.length || ''}
                         </span>
                       </div>
-                    );
+                    )
                   })}
                 {/* <div className="filter-item">
                   <div className="custom-control custom-checkbox">
@@ -145,34 +146,34 @@ const ProductFilter = ({ cates, onFilterChange, activeCate, isLoading }) => {
             </div>
           </div>
         </div>
-        <div className="widget widget-collapsible">
-          <h3 className="widget-title">
+        <div className='widget widget-collapsible'>
+          <h3 className='widget-title'>
             <a
-              data-toggle="collapse"
-              href="#widget-2"
-              role="button"
-              aria-expanded="true"
-              aria-controls="widget-5"
+              data-toggle='collapse'
+              href='#widget-2'
+              role='button'
+              aria-expanded='true'
+              aria-controls='widget-5'
             >
-              {" "}
-              Price{" "}
+              {' '}
+              Price{' '}
             </a>
           </h3>
-          <div className="collapse show" id="widget-2">
-            <div className="widget-body">
-              <div className="filter-price">
-                <div className="filter-price-text">
-                  {" "}
-                  Price Range: <span id="filter-price-range" />
+          <div className='collapse show' id='widget-2'>
+            <div className='widget-body'>
+              <div className='filter-price'>
+                <div className='filter-price-text'>
+                  {' '}
+                  Price Range: <span id='filter-price-range' />
                 </div>
-                <div id="price-slider" />
+                <div id='price-slider' />
               </div>
             </div>
           </div>
         </div>
       </div>
     </aside>
-  );
-};
+  )
+}
 
-export default ProductFilter;
+export default ProductFilter

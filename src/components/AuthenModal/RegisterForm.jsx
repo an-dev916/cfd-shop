@@ -1,109 +1,106 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { styled } from "styled-components";
-import { validate } from "../../utils/validate";
-import Input from "../Input";
+import { useForm } from 'react-hook-form'
+import { styled } from 'styled-components'
+import Input from '../Input'
 
 const InputNameWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-`;
+`
 
 const RegisterForm = ({ onRegister }) => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
-  } = useForm();
+    formState: { errors }
+  } = useForm()
 
   const onSubmit = (data) => {
-    console.log("data :>> ", data);
     if (data) {
-      onRegister?.(data);
+      onRegister?.(data)
     }
-  };
+  }
 
   return (
     <div
-      className="tab-pane fade show active"
-      id="register"
-      role="tabpanel"
-      aria-labelledby="register-tab"
+      className='tab-pane fade show active'
+      id='register'
+      role='tabpanel'
+      aria-labelledby='register-tab'
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputNameWrap>
           {/* First Name */}
           <Input
-            label="First Name"
+            label='First Name'
             required
             style={{ flex: 1 }}
-            placeholder=""
-            {...register("firstName", { required: "First Name is required" })}
+            placeholder=''
+            {...register('firstName', { required: 'First Name is required' })}
             error={errors?.firstName?.message}
           ></Input>
 
           {/* Last Name */}
           <Input
-            label="Last Name"
+            label='Last Name'
             required
             style={{ flex: 1 }}
-            placeholder=""
-            {...register("lastName", { required: "Last Name is required" })}
+            placeholder=''
+            {...register('lastName', { required: 'Last Name is required' })}
             error={errors?.lastName?.message}
           ></Input>
         </InputNameWrap>
 
         {/* Email */}
         <Input
-          label="Email"
+          label='Email'
           required
-          placeholder=""
-          {...register("email", {
-            required: "Email is required!",
+          placeholder=''
+          {...register('email', {
+            required: 'Email is required!',
             pattern: {
               value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-              message: "Please type correct email!",
-            },
+              message: 'Please type correct email!'
+            }
           })}
           error={errors?.email?.message}
         ></Input>
 
         {/* Password */}
         <Input
-          label="Password"
+          label='Password'
           required
-          type="password"
-          placeholder=""
-          {...register("password", {
-            required: "Password is required!",
+          type='password'
+          placeholder=''
+          {...register('password', {
+            required: 'Password is required!',
             minLength: {
               value: 8,
-              message: "Password minimun 8 characters",
+              message: 'Password minimun 8 characters'
             },
             pattern: {
               value:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message: "Must include Aa-Zz, 0-9, @$!%*?&",
-            },
+              message: 'Must include Aa-Zz, 0-9, @$!%*?&'
+            }
           })}
           error={errors?.password?.message}
         ></Input>
 
-        <div className="form-footer">
-          <button type="submit" className="btn btn-outline-primary-2">
+        <div className='form-footer'>
+          <button type='submit' className='btn btn-outline-primary-2'>
             <span>SIGN UP</span>
-            <i className="icon-long-arrow-right" />
+            <i className='icon-long-arrow-right' />
           </button>
-          <div className="custom-control custom-checkbox">
+          <div className='custom-control custom-checkbox'>
             <input
-              type="checkbox"
-              className="custom-control-input"
-              id="register-policy"
+              type='checkbox'
+              className='custom-control-input'
+              id='register-policy'
             />
-            <label className="custom-control-label" htmlFor="register-policy">
-              I agree to the <a href="privacy-policy.html">privacy policy</a> *
+            <label className='custom-control-label' htmlFor='register-policy'>
+              I agree to the <a href='privacy-policy.html'>privacy policy</a> *
             </label>
           </div>
           {/* End .custom-checkbox */}
@@ -128,7 +125,7 @@ const RegisterForm = ({ onRegister }) => {
         </div>
       </div> */}
     </div>
-  );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm

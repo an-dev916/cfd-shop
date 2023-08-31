@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 const useQuery = (promise, dependencies = []) => {
-  const [data, setData] = useState();
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState()
+  const [error, setError] = useState()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchDate();
-  }, dependencies);
+    fetchDate()
+  }, dependencies)
 
   const fetchDate = async (query) => {
     try {
-      const res = await promise(query);
-      setData(res?.data?.data || []);
+      const res = await promise(query)
+      setData(res?.data?.data || [])
     } catch (error) {
-      setError(error);
+      setError(error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return {
     data,
     loading,
     error,
-    refetch: fetchDate,
-  };
-};
+    refetch: fetchDate
+  }
+}
 
-export default useQuery;
+export default useQuery

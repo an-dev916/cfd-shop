@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 const useForceRender = () => {
-  const [render, setRender] = useState(true);
+  const [render, setRender] = useState(true)
 
-  return () => setRender(!render);
-};
+  return () => setRender(!render)
+}
 
-export default useForceRender();
+export default useForceRender

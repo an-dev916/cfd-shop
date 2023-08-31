@@ -1,43 +1,42 @@
-import cn from "classnames";
-import React from "react";
-import { Link } from "react-router-dom";
-import { PATHS } from "../../constants/pathnames";
-import { PRODUCTS_LIMIT } from "../../constants/productsLimit";
+import cn from 'classnames'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { PATHS } from '../../constants/pathnames'
+import { PRODUCTS_LIMIT } from '../../constants/productsLimit'
 
 const MenuCates = ({
   catesList,
   cates,
   search,
   onHideMenu,
-  handleHideMenu,
+  handleHideMenu
 }) => {
-  console.log("catesList :>> ", catesList);
   return (
     <div
-      className="tab-pane fade"
-      id="mobile-cats-tab"
-      role="tabpanel"
-      aria-labelledby="mobile-cats-link"
+      className='tab-pane fade'
+      id='mobile-cats-tab'
+      role='tabpanel'
+      aria-labelledby='mobile-cats-link'
     >
-      <nav className="mobile-cats-nav">
-        <ul className="mobile-cats-menu">
+      <nav className='mobile-cats-nav'>
+        <ul className='mobile-cats-menu'>
           {catesList?.length > 0 &&
             catesList?.map((item, index) => {
               return (
-                <li>
+                <li key={index}>
                   <Link
                     to={`${PATHS.PRODUCT}?category=${cates[index]?.id}&limit=${PRODUCTS_LIMIT}&page=1`}
                     onClick={handleHideMenu}
                     className={cn({
-                      "mobile-cats-lead": search?.includes(
+                      'mobile-cats-lead': search?.includes(
                         `${cates[index]?.id}`
-                      ),
+                      )
                     })}
                   >
-                    {item || ""}
+                    {item || ''}
                   </Link>
                 </li>
-              );
+              )
             })}
           {/* <li>
             <a className="mobile-cats-lead" href="#">
@@ -59,7 +58,7 @@ const MenuCates = ({
         </ul>
       </nav>
     </div>
-  );
-};
+  )
+}
 
-export default MenuCates;
+export default MenuCates

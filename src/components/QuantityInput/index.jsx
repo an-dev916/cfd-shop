@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { styled } from "styled-components";
+import React, { useState } from 'react'
+import { styled } from 'styled-components'
 
 const InputNumberStyle = styled.input`
   &::-webkit-outer-spin-button,
@@ -10,7 +10,7 @@ const InputNumberStyle = styled.input`
   }
 
   -moz-appearance: textfield; /* Firefox */
-`;
+`
 
 const QuantityInput = ({
   className,
@@ -23,7 +23,7 @@ const QuantityInput = ({
   handleDeleteProduct,
   ...inputProps
 }) => {
-  const [renderValue, setRenderValue] = useState(value || "1");
+  const [renderValue, setRenderValue] = useState(value || '1')
 
   // useEffect(() => {
   //   const myTimeout = setTimeout(() => {
@@ -36,76 +36,75 @@ const QuantityInput = ({
   // }, [value, renderValue]);
 
   const onInputChange = (e) => {
-    setRenderValue(e.target.value);
-  };
+    setRenderValue(e.target.value)
+  }
 
   const onInputBlur = (e) => {
-    const value = modifyValue(e.target.value);
-    setRenderValue(value);
-    onChange?.(value);
-  };
+    const value = modifyValue(e.target.value)
+    setRenderValue(value)
+    onChange?.(value)
+  }
 
   const onIncrease = () => {
-    const value = modifyValue(Number(renderValue) + Number(step));
-    setRenderValue(value);
-    onChange?.(value);
-  };
+    const value = modifyValue(Number(renderValue) + Number(step))
+    setRenderValue(value)
+    onChange?.(value)
+  }
 
   const onDecrease = () => {
-    console.log("onDecrease:>> ", { renderValue, step });
-    const value = modifyValue(Number(renderValue) - Number(step));
+    const value = modifyValue(Number(renderValue) - Number(step))
     if (Number(renderValue) - step < 1) {
-      handleDeleteProduct?.();
+      handleDeleteProduct?.()
     } else {
-      setRenderValue(value);
-      onChange?.(value);
+      setRenderValue(value)
+      onChange?.(value)
     }
-  };
+  }
 
   const modifyValue = (value) => {
     if (value > max) {
-      return max;
+      return max
     } else if (value < min) {
-      return min;
+      return min
     } else {
-      return value;
+      return value
     }
-  };
+  }
 
   return (
     <div className={className}>
-      <div className="input-group input-spinner">
-        <div className="input-group-prepend">
+      <div className='input-group input-spinner'>
+        <div className='input-group-prepend'>
           <button
-            className="btn btn-decrement btn-spinner"
+            className='btn btn-decrement btn-spinner'
             onClick={onDecrease}
           >
-            <i className="icon-minus"></i>
+            <i className='icon-minus'></i>
           </button>
         </div>
         <InputNumberStyle
-          type="number"
-          className="form-control"
-          style={{ textAlign: "center" }}
+          type='number'
+          className='form-control'
+          style={{ textAlign: 'center' }}
           value={renderValue}
           onChange={onInputChange}
           onBlur={onInputBlur}
           max={max}
           {...inputProps}
         />
-        <div className="input-group-append">
+        <div className='input-group-append'>
           <button
             style={{ minWidth: 26 }}
-            className="btn btn-increment btn-spinner"
-            type="button"
+            className='btn btn-increment btn-spinner'
+            type='button'
             onClick={onIncrease}
           >
-            <i className="icon-plus"></i>
+            <i className='icon-plus'></i>
           </button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default QuantityInput;
+export default QuantityInput

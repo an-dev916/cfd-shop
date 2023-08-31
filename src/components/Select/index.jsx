@@ -1,10 +1,10 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react'
 
 const Select = forwardRef(
   ({ options = [], label, required, error, onChangeValue, ...rest }, ref) => {
     return (
       <>
-        <label htmlFor={rest?.name || ""}>
+        <label htmlFor={rest?.name || ''}>
           {label} {required && <span>*</span>}
         </label>
         <select
@@ -12,7 +12,7 @@ const Select = forwardRef(
           ref={ref}
           // onChange={(ev) => console.log(ev.target.value)}
           onChange={onChangeValue}
-          className={`form-control form-select ${!!error ? "input-error" : ""}`}
+          className={`form-control form-select ${!!error ? 'input-error' : ''}`}
         >
           {options?.length > 0 &&
             options.map((option) => (
@@ -21,10 +21,10 @@ const Select = forwardRef(
               </option>
             ))}
         </select>
-        {!!error && <p className="form-error">{error}</p>}
+        {!!error && <p className='form-error'>{error}</p>}
       </>
-    );
+    )
   }
-);
+)
 
-export default Select;
+export default Select

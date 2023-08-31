@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
-const RadioContext = createContext();
+const RadioContext = createContext()
 
 const RadioGroup = ({
   defaultValue,
@@ -8,23 +8,23 @@ const RadioGroup = ({
   className,
   onChange,
   children,
-  type = "string",
+  type = 'string'
 }) => {
-  const [value, setValue] = useState(defaultValue || "");
+  const [value, setValue] = useState(defaultValue || '')
 
   useEffect(() => {
-    setValue(defaultValue);
-  }, [defaultValue]);
+    setValue(defaultValue)
+  }, [defaultValue])
 
   const onCheckChange = (e, objectValue) => {
-    const value = e.target.value;
-    setValue(value);
-    if (type === "object") {
-      onChange?.(objectValue);
+    const value = e.target.value
+    setValue(value)
+    if (type === 'object') {
+      onChange?.(objectValue)
     } else {
-      onChange?.(value);
+      onChange?.(value)
     }
-  };
+  }
 
   return (
     <RadioContext.Provider
@@ -33,18 +33,16 @@ const RadioGroup = ({
     >
       {children}
     </RadioContext.Provider>
-  );
-};
+  )
+}
 
 const RadioItem = ({ children, disabled = false, value, objectValue }) => {
-  const { value: selectedValue, onCheckChange } = useContext(RadioContext);
-  console.log("selectedValue :>> ", selectedValue);
-  console.log("value :>> ", value);
+  const { value: selectedValue, onCheckChange } = useContext(RadioContext)
   return (
-    <div className="custom-control custom-radio">
+    <div className='custom-control custom-radio'>
       <input
-        className="custom-control-input"
-        type="radio"
+        className='custom-control-input'
+        type='radio'
         id={value}
         name={value}
         value={value}
@@ -52,11 +50,11 @@ const RadioItem = ({ children, disabled = false, value, objectValue }) => {
         disabled={disabled}
         onChange={(e) => onCheckChange(e, objectValue)}
       />
-      <label className="custom-control-label" htmlFor={value}>
+      <label className='custom-control-label' htmlFor={value}>
         {children}
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default { Group: RadioGroup, Item: RadioItem };
+export default { Group: RadioGroup, Item: RadioItem }

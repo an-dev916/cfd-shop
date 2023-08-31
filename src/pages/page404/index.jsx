@@ -1,28 +1,31 @@
-import React from "react";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { PATHS } from '../../constants/pathnames'
 
 const Page404 = () => {
   return (
-    <main className="main">
+    <main className='main'>
       <div
-        className="error-content text-center"
+        className='error-content text-center'
         style={{
-          backgroundImage: "url(assets/images/backgrounds/error-bg.jpg)",
+          backgroundImage: 'url(assets/images/backgrounds/error-bg.jpg)'
         }}
       >
-        <div className="container">
-          <h1 className="error-title">Error 404</h1>
+        <div className='container'>
+          <h1 className='error-title'>Error 404</h1>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <p>We are sorry, the page you've requested is not available.</p>
-          <a
-            href="index.html"
-            className="btn btn-outline-primary-2 btn-minwidth-lg"
+          <Link
+            to={PATHS.HOME}
+            className='btn btn-outline-primary-2 btn-minwidth-lg'
           >
             <span>BACK TO HOMEPAGE</span>
-            <i className="icon-long-arrow-right" />
-          </a>
+            <i className='icon-long-arrow-right' />
+          </Link>
         </div>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Page404;
+export default Page404
