@@ -1,37 +1,35 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useAuthen } from "../../../components/MainContext";
-import { LOCAL_STORAGE } from "../../../constants/localStorage";
-import { orderService } from "../../../services/orderService";
-import { authActions } from "../../../store/reducers/authenReducer";
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useAuthen } from '../../../components/MainContext'
+import { LOCAL_STORAGE } from '../../../constants/localStorage'
+import { orderService } from '../../../services/orderService'
+import { authActions } from '../../../store/reducers/authenReducer'
 
 const useMyOrder = () => {
-  const [reviewRate, setReviewRate] = useState(3);
-  const [renderListOrders, setRenderListOrders] = useState({});
-  console.log("renderListOrders :>> ", renderListOrders);
-  const { showReviewModal, setCheckReview } = useAuthen();
+  const [reviewRate, setReviewRate] = useState(3)
+  const [renderListOrders, setRenderListOrders] = useState({})
+  const { showReviewModal, setCheckReview } = useAuthen()
 
-  const listOrders = useSelector((state) => state.auth.listOrders);
+  const listOrders = useSelector((state) => state.auth.listOrders)
   const onReviewSubmit = (reviewPayload) => {
-    console.log("reviewPayload :>> ", reviewPayload);
-  };
+    //
+  }
 
   const handleShowMore = () => {
-    console.log("listOrders :>> ", listOrders);
     if (!renderListOrders?.expanded) {
       setRenderListOrders({
         ...renderListOrders,
         expanded: true,
-        itemsToShow: listOrders?.orders?.length,
-      });
+        itemsToShow: listOrders?.orders?.length
+      })
     } else {
       setRenderListOrders({
         ...renderListOrders,
         expanded: false,
-        itemsToShow: 3,
-      });
+        itemsToShow: 3
+      })
     }
-  };
+  }
   const orderProps = {
     listOrders,
     renderListOrders,
@@ -39,28 +37,28 @@ const useMyOrder = () => {
     setReviewRate,
     reviewRate,
     showReviewModal,
-    setCheckReview,
-  };
+    setCheckReview
+  }
   const reviewProps = {
     onReviewSubmit,
     setReviewRate,
-    reviewRate,
-  };
+    reviewRate
+  }
 
   useEffect(() => {
     setRenderListOrders({
       listOrders,
       itemsToShow: 3,
-      expanded: false,
-    });
-  }, [JSON.stringify(listOrders)]);
+      expanded: false
+    })
+  }, [JSON.stringify(listOrders)])
 
   return {
     reviewProps,
     orderProps,
     renderListOrders,
-    handleShowMore,
-  };
-};
+    handleShowMore
+  }
+}
 
-export default useMyOrder;
+export default useMyOrder

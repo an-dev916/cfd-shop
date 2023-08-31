@@ -10,11 +10,6 @@ const useBlog = () => {
   // Handle URL Search
   const { search } = useLocation()
   const queryObject = queryString.parse(search)
-  console.log('queryObject :>> ', queryObject)
-  console.log('search info :>> ', {
-    search,
-    queryObject
-  })
   const [_, setSearchParams] = useSearchParams()
 
   // Update Query String
@@ -24,7 +19,6 @@ const useBlog = () => {
       ...queryObject,
       limit: BLOGS_LIMIT
     })
-    console.log('newQueryString :>> ', newQueryString)
 
     // Update Query Search String
     setSearchParams(new URLSearchParams(newQueryString))
@@ -41,7 +35,6 @@ const useBlog = () => {
     blogService.getBlogs(query || `?limit=${BLOGS_LIMIT}`)
   )
   const { blogs, pagination: blogPagi } = blogsData || {}
-  console.log('blogs :>> ', blogs)
   const {
     data: catesData,
     loading: catesLoading,
@@ -112,8 +105,6 @@ const useBlog = () => {
       const res = await blogService.getBlogs()
       const blogRes = res?.data?.data?.blogs
       if (blogRes) {
-        console.log('blogRes :>> ', blogRes)
-
         const filterBlogsByTag = blogRes?.filter((item) =>
           item?.tags?.includes(tagID)
         )
@@ -138,7 +129,6 @@ const useBlog = () => {
     loading: allBlogsLoading,
     error: allBlogsError
   } = useQuery(blogService.getBlogs)
-  console.log('allBlogsData :>> ', allBlogsData)
   const [renderPopularBlogs, setRenderPopularBlogs] = useState([])
   const popularProps = { renderPopularBlogs }
 
@@ -163,7 +153,6 @@ const useBlog = () => {
         return timePost2 - timePost1
       })
       setRenderPopularBlogs(modBlogs)
-      console.log('popular blogs :>> ', modBlogs)
     }
     // setRenderPopularBlogs();
   }, [JSON.stringify(allBlogsData?.blogs)])

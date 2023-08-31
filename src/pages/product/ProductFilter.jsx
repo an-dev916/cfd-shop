@@ -3,8 +3,6 @@ import useQuery from '../../hooks/useQuery'
 import { productService } from '../../services/productSevice'
 
 const ProductFilter = ({ cates, onFilterChange, activeCate, isLoading }) => {
-  console.log('cates :>> ', cates)
-
   const onCateChange = (id, isChecked) => {
     if (isChecked) {
       onFilterChange(id)

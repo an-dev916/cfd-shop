@@ -1,23 +1,22 @@
-import cn from "classnames";
-import React from "react";
-import DETAIL_TABS from "../../constants/detailTabs";
-import ProductTabsContent from "./ProductTabsContent";
+import cn from 'classnames'
+import React from 'react'
+import DETAIL_TABS from '../../constants/detailTabs'
+import ProductTabsContent from './ProductTabsContent'
 
 const ProductTabs = ({ description, shippingReturn, productTabsProps }) => {
-  const { renderReviews, setRenderTab, renderTab } = productTabsProps || {};
-  console.log("renderReviews :>> ", renderReviews);
+  const { renderReviews, setRenderTab, renderTab } = productTabsProps || {}
   const onChangeTab = (tab) => {
     // setTimeout(() => setRenderTab?.(tab), 300);
-    setRenderTab?.(tab);
-  };
+    setRenderTab?.(tab)
+  }
   return (
-    <div className="product-details-tab">
-      <ul className="nav nav-pills justify-content-center" role="tablist">
-        <li className="nav-item">
+    <div className='product-details-tab'>
+      <ul className='nav nav-pills justify-content-center' role='tablist'>
+        <li className='nav-item'>
           <a
             // className="nav-link active"
-            className={cn("nav-link", {
-              active: renderTab === DETAIL_TABS.desc,
+            className={cn('nav-link', {
+              active: renderTab === DETAIL_TABS.desc
             })}
             onClick={() => onChangeTab(DETAIL_TABS.desc)}
             // id="product-desc-link"
@@ -30,10 +29,10 @@ const ProductTabs = ({ description, shippingReturn, productTabsProps }) => {
             Description
           </a>
         </li>
-        <li className="nav-item">
+        <li className='nav-item'>
           <a
-            className={cn("nav-link", {
-              active: renderTab === DETAIL_TABS.shipping,
+            className={cn('nav-link', {
+              active: renderTab === DETAIL_TABS.shipping
             })}
             onClick={() => onChangeTab(DETAIL_TABS.shipping)}
             // className="nav-link"
@@ -47,10 +46,10 @@ const ProductTabs = ({ description, shippingReturn, productTabsProps }) => {
             Shipping &amp; Returns
           </a>
         </li>
-        <li className="nav-item">
+        <li className='nav-item'>
           <a
-            className={cn("nav-link", {
-              active: renderTab === DETAIL_TABS.review,
+            className={cn('nav-link', {
+              active: renderTab === DETAIL_TABS.review
             })}
             onClick={() => onChangeTab(DETAIL_TABS.review)}
             // className="nav-link"
@@ -65,7 +64,7 @@ const ProductTabs = ({ description, shippingReturn, productTabsProps }) => {
           </a>
         </li>
       </ul>
-      <div className="tab-content">
+      <div className='tab-content'>
         <ProductTabsContent
           renderReviews={renderReviews}
           renderTab={renderTab}
@@ -213,7 +212,7 @@ const ProductTabs = ({ description, shippingReturn, productTabsProps }) => {
         </div> */}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductTabs;
+export default ProductTabs

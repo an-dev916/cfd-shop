@@ -1,21 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { PATHS } from "../../../constants/pathnames";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { PATHS } from '../../../constants/pathnames'
 
 const EmptyOrder = () => {
   return (
     <>
       <p>No order has been made yet.</p>
-      <Link
-        to={PATHS.PRODUCT}
-        className="btn btn-outline-primary-2"
-        onClick={() => console.log("test")}
-      >
+      <Link to={PATHS.PRODUCT} className='btn btn-outline-primary-2'>
         <span>GO SHOP</span>
-        <i className="icon-long-arrow-right" />
+        <i className='icon-long-arrow-right' />
       </Link>
     </>
-  );
-};
+  )
+}
 
-export default EmptyOrder;
+export default EmptyOrder

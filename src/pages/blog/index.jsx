@@ -1,16 +1,16 @@
-import React from "react";
-import BlogList from "./BlogList";
-import useBlog from "./useBlog";
-import "./style.css";
-import Pagination from "../../components/Pagination";
-import { PATHS } from "../../constants/pathnames";
-import Breadcrumb from "../../components/Breadcrumb";
-import { Link } from "react-router-dom";
-import BlogSearch from "./BlogSearch";
-import BlogCates from "./BlogCates";
-import BlogPopular from "./BlogPopular";
-import AdsBox from "./AdsBox";
-import BlogTags from "./BlogTags";
+import React from 'react'
+import BlogList from './BlogList'
+import useBlog from './useBlog'
+import './style.css'
+import Pagination from '../../components/Pagination'
+import { PATHS } from '../../constants/pathnames'
+import Breadcrumb from '../../components/Breadcrumb'
+import { Link } from 'react-router-dom'
+import BlogSearch from './BlogSearch'
+import BlogCates from './BlogCates'
+import BlogPopular from './BlogPopular'
+import AdsBox from './AdsBox'
+import BlogTags from './BlogTags'
 
 const Blog = () => {
   const {
@@ -20,30 +20,29 @@ const Blog = () => {
     searchProps,
     tagsProps,
     popularProps,
-    renderBlogsByTag,
-  } = useBlog();
+    renderBlogsByTag
+  } = useBlog()
 
-  console.log("pagiProps :>> ", pagiProps);
   return (
-    <main className="main">
+    <main className='main'>
       <div
-        className="page-header text-center"
+        className='page-header text-center'
         style={{ backgroundImage: 'url("assets/images/page-header-bg.jpg")' }}
       >
-        <div className="container">
-          <h1 className="page-title">Blog</h1>
+        <div className='container'>
+          <h1 className='page-title'>Blog</h1>
         </div>
       </div>
-      <Breadcrumb className="border-0 mb-0">
+      <Breadcrumb className='border-0 mb-0'>
         <Breadcrumb.Item>
           <Link to={PATHS.HOME}>Home</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item isActive>Blog</Breadcrumb.Item>
       </Breadcrumb>
-      <div className="page-content">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-9">
+      <div className='page-content'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-lg-9'>
               {/* <div className="entry-container max-col-2" data-layout="fitRows">
                 <div className="entry-item col-sm-6">
                   <article className="entry entry-grid">
@@ -310,8 +309,8 @@ const Blog = () => {
                 </ul>
               </nav> */}
             </div>
-            <aside className="col-lg-3">
-              <div className="sidebar">
+            <aside className='col-lg-3'>
+              <div className='sidebar'>
                 <BlogSearch {...searchProps} />
                 <BlogCates {...catesProps} />
                 <BlogPopular {...popularProps} />
@@ -323,7 +322,7 @@ const Blog = () => {
         </div>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Blog;
+export default Blog

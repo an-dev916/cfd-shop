@@ -1,53 +1,49 @@
-import { message } from "antd";
-import cn from "classnames";
-import React from "react";
-import { useForm } from "react-hook-form";
-import Input from "../../components/Input";
-import { subscribeService } from "../../services/subscribeService";
+import { message } from 'antd'
+import cn from 'classnames'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import Input from '../../components/Input'
+import { subscribeService } from '../../services/subscribeService'
 
 const ContactForm = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
-  } = useForm();
+    formState: { errors }
+  } = useForm()
   const onSubmit = async (data) => {
     try {
       if (data?.email) {
         const payload = {
-          name: data?.name || "",
-          title: data?.title || "",
-          email: data?.email || "",
-          description: data?.description || "",
-          phone: data?.phone || "",
-        };
-        const res = await subscribeService.subscribe(payload);
-        console.log("res :>> ", res);
+          name: data?.name || '',
+          title: data?.title || '',
+          email: data?.email || '',
+          description: data?.description || '',
+          phone: data?.phone || ''
+        }
+        const res = await subscribeService.subscribe(payload)
         if (res?.data?.data) {
-          message.success("Succesfully!");
+          message.success('Succesfully!')
         }
       }
-
-      console.log("data :>> ", data);
     } catch (error) {
-      console.log("error :>> ", error);
-      message.error("Failed Submit. Please try again!");
+      console.log('error :>> ', error)
+      message.error('Failed Submit. Please try again!')
     }
-  };
-  console.log("errors :>> ", errors);
+  }
 
   return (
-    <div className="col-lg-6">
-      <h2 className="title mb-1">Got Any Questions?</h2>
-      <p className="mb-2">
+    <div className='col-lg-6'>
+      <h2 className='title mb-1'>Got Any Questions?</h2>
+      <p className='mb-2'>
         Use the form below to get in touch with the sales team
       </p>
-      <form onSubmit={handleSubmit(onSubmit)} className="contact-form mb-3">
-        <div className="row">
-          <div className="col-sm-6">
+      <form onSubmit={handleSubmit(onSubmit)} className='contact-form mb-3'>
+        <div className='row'>
+          <div className='col-sm-6'>
             <Input
-              placeholder="Name *"
-              {...register("name", { required: "Please fill in this field!" })}
+              placeholder='Name *'
+              {...register('name', { required: 'Please fill in this field!' })}
               error={errors?.name?.message}
             />
 
@@ -63,15 +59,15 @@ const ContactForm = () => {
             />
             <p className="form-error">Please fill in this field</p> */}
           </div>
-          <div className="col-sm-6">
+          <div className='col-sm-6'>
             <Input
-              placeholder="Email *"
-              {...register("email", {
-                required: "Please fill in this field!",
+              placeholder='Email *'
+              {...register('email', {
+                required: 'Please fill in this field!',
                 pattern: {
                   value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                  message: "Please type correct email!",
-                },
+                  message: 'Please type correct email!'
+                }
               })}
               error={errors?.email?.message}
             />
@@ -87,16 +83,16 @@ const ContactForm = () => {
             /> */}
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-6">
+        <div className='row'>
+          <div className='col-sm-6'>
             <Input
-              placeholder="Phone *"
-              {...register("phone", {
-                required: "Please fill in this field!",
+              placeholder='Phone *'
+              {...register('phone', {
+                required: 'Please fill in this field!',
                 pattern: {
                   value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-                  message: "Phone includes 10 numbers!",
-                },
+                  message: 'Phone includes 10 numbers!'
+                }
               })}
               error={errors?.phone?.message}
             />
@@ -110,10 +106,10 @@ const ContactForm = () => {
               placeholder="Phone"
             /> */}
           </div>
-          <div className="col-sm-6">
+          <div className='col-sm-6'>
             <Input
-              placeholder="Subject"
-              {...register("title")}
+              placeholder='Subject'
+              {...register('title')}
               error={errors?.title?.message}
             />
             {/* <label htmlFor="csubject" className="sr-only">
@@ -128,9 +124,9 @@ const ContactForm = () => {
           </div>
         </div>
         <Input
-          placeholder="Message *"
-          {...register("description", {
-            required: "Please fill in this field!",
+          placeholder='Message *'
+          {...register('description', {
+            required: 'Please fill in this field!'
           })}
           error={errors?.description?.message}
           renderInput={(props) => {
@@ -138,13 +134,13 @@ const ContactForm = () => {
               <>
                 <textarea
                   {...props}
-                  className={cn("form-control", {
-                    "input-error": errors?.description?.message,
+                  className={cn('form-control', {
+                    'input-error': errors?.description?.message
                   })}
                   // placeholder="Notes about your order, e.g. special notes for delivery"
                 />
               </>
-            );
+            )
           }}
         />
         {/* <label htmlFor="cmessage" className="sr-only">
@@ -160,15 +156,15 @@ const ContactForm = () => {
           defaultValue={""}
         /> */}
         <button
-          type="submit"
-          className="btn btn-outline-primary-2 btn-minwidth-sm"
+          type='submit'
+          className='btn btn-outline-primary-2 btn-minwidth-sm'
         >
           <span>SUBMIT</span>
-          <i className="icon-long-arrow-right" />
+          <i className='icon-long-arrow-right' />
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default ContactForm;
+export default ContactForm

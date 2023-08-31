@@ -1,36 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { PATHS } from "../../constants/pathnames";
-import { SHIPPING_TYPES } from "../../constants/shippingTypes";
-import { formatCurrency } from "../../utils/format";
-import Radio from "../../components/Radio";
-import { message } from "antd";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { PATHS } from '../../constants/pathnames'
+import { SHIPPING_TYPES } from '../../constants/shippingTypes'
+import { formatCurrency } from '../../utils/format'
+import Radio from '../../components/Radio'
+import { message } from 'antd'
 
 const SummaryCart = ({
   summarySubTotal,
   summaryTotal,
   onUpdateShipping,
   summaryProducts,
-  typeShip,
+  typeShip
 }) => {
-  console.log("typeShip :>> ", typeShip);
   const onProceed = () => {
     if (!(summaryProducts?.length > 0)) {
-      message.error("Your Cart is empty!");
+      message.error('Your Cart is empty!')
     } else {
-      message.error("Please select shipping type!");
+      message.error('Please select shipping type!')
     }
-  };
+  }
   return (
-    <div className="summary summary-cart">
-      <h3 className="summary-title">Cart Total</h3>
-      <table className="table table-summary">
+    <div className='summary summary-cart'>
+      <h3 className='summary-title'>Cart Total</h3>
+      <table className='table table-summary'>
         <tbody>
-          <tr className="summary-subtotal">
+          <tr className='summary-subtotal'>
             <td>Subtotal:</td>
             <td>${formatCurrency(summarySubTotal)}</td>
           </tr>
-          <tr className="summary-shipping">
+          <tr className='summary-shipping'>
             <td>Shipping:</td>
             <td>&nbsp;</td>
           </tr>
@@ -38,12 +37,12 @@ const SummaryCart = ({
           <Radio.Group
             onChange={onUpdateShipping}
             defaultValue={typeShip}
-            type="object"
+            type='object'
           >
             {SHIPPING_TYPES.map((option) => {
-              const { label, value, price } = option || {};
+              const { label, value, price } = option || {}
               return (
-                <tr key={option.value} className="summary-shipping-row">
+                <tr key={option.value} className='summary-shipping-row'>
                   <td>
                     <Radio.Item objectValue={option} value={value}>
                       {label}
@@ -51,7 +50,7 @@ const SummaryCart = ({
                   </td>
                   <td>${formatCurrency(price)}</td>
                 </tr>
-              );
+              )
             })}
           </Radio.Group>
 
@@ -110,14 +109,14 @@ const SummaryCart = ({
             <td>$20.00</td>
           </tr> */}
 
-          <tr className="summary-shipping-estimate">
+          <tr className='summary-shipping-estimate'>
             <td>
               Estimate for Your Country <br />
-              <a href="dashboard.html">Change address</a>
+              <a href='dashboard.html'>Change address</a>
             </td>
             <td>&nbsp;</td>
           </tr>
-          <tr className="summary-total">
+          <tr className='summary-total'>
             <td>Total:</td>
             <td>
               $
@@ -129,20 +128,20 @@ const SummaryCart = ({
       {!!typeShip?.typeShip && summaryProducts?.length > 0 ? (
         <Link
           to={PATHS.CHECKOUT}
-          className="btn btn-outline-primary-2 btn-order btn-block"
+          className='btn btn-outline-primary-2 btn-order btn-block'
         >
           PROCEED TO CHECKOUT
         </Link>
       ) : (
         <a
           onClick={onProceed}
-          className="btn btn-outline-primary-2 btn-order btn-block"
+          className='btn btn-outline-primary-2 btn-order btn-block'
         >
           PROCEED TO CHECKOUT
         </a>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SummaryCart;
+export default SummaryCart

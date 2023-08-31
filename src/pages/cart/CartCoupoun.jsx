@@ -1,48 +1,46 @@
-import { message } from "antd";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import Input from "../../components/Input";
-import { orderService } from "../../services/orderService";
-import "./style.css";
+import { message } from 'antd'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import Input from '../../components/Input'
+import { orderService } from '../../services/orderService'
+import './style.css'
 
 const CartCoupoun = () => {
   // const [form, setForm] = useState("");
-  const [coupoun, setCoupoun] = useState(0);
+  const [coupoun, setCoupoun] = useState(0)
   const {
     register,
     setValue,
     formState: { errors },
-    handleSubmit,
-  } = useForm();
+    handleSubmit
+  } = useForm()
 
   const onGetCoupoun = async (data) => {
-    console.log("data :>> ", data);
     if (data.coupoun && !coupoun) {
       try {
-        const res = await orderService.getCoupoun(data.coupoun);
-        console.log("res :>> ", res);
+        const res = await orderService.getCoupoun(data.coupoun)
         if (res?.data) {
-          setCoupoun(res?.data?.data?.value);
-          message.success("Get Coupoun Succesfully!");
+          setCoupoun(res?.data?.data?.value)
+          message.success('Get Coupoun Succesfully!')
         }
       } catch (error) {
-        console.log("error :>> ", error);
-        message.error("Invalid Coupoun!");
+        console.log('error :>> ', error)
+        message.error('Invalid Coupoun!')
       }
     } else if (coupoun) {
-      setCoupoun(0);
-      setValue("coupoun", "");
-      message.info("Removed Coupoun!");
+      setCoupoun(0)
+      setValue('coupoun', '')
+      message.info('Removed Coupoun!')
     } else {
-      return;
+      return
     }
-  };
+  }
 
   return (
-    <div className="cart-bottom">
-      <div className="cart-discount" style={{ maxWidth: "initial" }}>
+    <div className='cart-bottom'>
+      <div className='cart-discount' style={{ maxWidth: 'initial' }}>
         <form onSubmit={handleSubmit(onGetCoupoun)}>
-          <div className="input-group">
+          <div className='input-group'>
             {/* <input
               type="text"
               className="form-control input-error"
@@ -52,15 +50,15 @@ const CartCoupoun = () => {
               onChange={(e) => setForm(e.target.value)}
             /> */}
 
-            <Input {...register("coupoun")} error={errors?.coupoun?.message} />
+            <Input {...register('coupoun')} error={errors?.coupoun?.message} />
 
-            <div className="input-group-append">
+            <div className='input-group-append'>
               <button
-                className="btn btn-outline-primary-2"
-                type="submit"
-                style={{ padding: "0 20px", height: "40px" }}
+                className='btn btn-outline-primary-2'
+                type='submit'
+                style={{ padding: '0 20px', height: '40px' }}
               >
-                {!!!coupoun ? "Add Coupoun" : "Remove Coupoun"}
+                {!!!coupoun ? 'Add Coupoun' : 'Remove Coupoun'}
               </button>
             </div>
           </div>
@@ -72,7 +70,7 @@ const CartCoupoun = () => {
         <i className="icon-refresh" />
       </a> */}
     </div>
-  );
-};
+  )
+}
 
-export default CartCoupoun;
+export default CartCoupoun

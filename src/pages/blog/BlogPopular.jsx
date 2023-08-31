@@ -1,41 +1,40 @@
-import moment from "moment";
-import React from "react";
-import { Link } from "react-router-dom";
-import { PATHS } from "../../constants/pathnames";
+import moment from 'moment'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { PATHS } from '../../constants/pathnames'
 
 const BlogPopular = ({ renderPopularBlogs }) => {
-  console.log("renderPopularBlogs :>> ", renderPopularBlogs);
   return (
-    <div className="widget">
-      <h3 className="widget-title">Newest Posts</h3>
-      <ul className="posts-list" style={{ height: 386 }}>
+    <div className='widget'>
+      <h3 className='widget-title'>Newest Posts</h3>
+      <ul className='posts-list' style={{ height: 386 }}>
         {renderPopularBlogs?.length > 0 &&
           renderPopularBlogs?.map((blog, index) => {
             if (index >= 4) {
-              return;
+              return
             }
-            const { id, createdAt, image, slug, name } = blog || {};
-            const postedDate = moment(createdAt).format("MMM DD, YYYY");
+            const { id, createdAt, image, slug, name } = blog || {}
+            const postedDate = moment(createdAt).format('MMM DD, YYYY')
             return (
               <li key={id || index}>
                 <figure>
                   <Link
-                    to={`${PATHS.BLOG}${slug ? "/" + slug : ""}`}
+                    to={`${PATHS.BLOG}${slug ? '/' + slug : ''}`}
                     style={{ height: 80, width: 80 }}
                   >
-                    <img src={image || ""} alt="post" />
+                    <img src={image || ''} alt='post' />
                   </Link>
                 </figure>
                 <div>
-                  <span>{postedDate || ""}</span>
+                  <span>{postedDate || ''}</span>
                   <h4>
-                    <Link to={`${PATHS.BLOG}${slug ? "/" + slug : ""}`}>
-                      {name || ""}
+                    <Link to={`${PATHS.BLOG}${slug ? '/' + slug : ''}`}>
+                      {name || ''}
                     </Link>
                   </h4>
                 </div>
               </li>
-            );
+            )
           })}
         {/* <li>
           <figure>
@@ -91,7 +90,7 @@ const BlogPopular = ({ renderPopularBlogs }) => {
         </li> */}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default BlogPopular;
+export default BlogPopular

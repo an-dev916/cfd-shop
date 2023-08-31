@@ -10,7 +10,6 @@ const Select = forwardRef(
         <select
           {...rest}
           ref={ref}
-          // onChange={(ev) => console.log(ev.target.value)}
           onChange={onChangeValue}
           className={`form-control form-select ${!!error ? 'input-error' : ''}`}
         >

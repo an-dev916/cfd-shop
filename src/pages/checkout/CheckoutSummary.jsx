@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { styled } from "styled-components";
-import { PATHS } from "../../constants/pathnames";
-import { PAYMENT_METHOD } from "../../constants/paymentMethods";
-import { formatCurrency } from "../../utils/format";
-import cn from "classnames";
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { styled } from 'styled-components'
+import { PATHS } from '../../constants/pathnames'
+import { PAYMENT_METHOD } from '../../constants/paymentMethods'
+import { formatCurrency } from '../../utils/format'
+import cn from 'classnames'
 
 const ShippingFigure = styled.td`
   a {
@@ -18,7 +18,7 @@ const ShippingFigure = styled.td`
       color: #fcb941 !important;
     }
   }
-`;
+`
 
 const CheckoutSummary = ({
   onCheckout,
@@ -28,17 +28,16 @@ const CheckoutSummary = ({
   total,
   shipping,
   paymentMethod,
-  onUpdatePaymentMethod,
+  onUpdatePaymentMethod
 }) => {
-  const isCard = paymentMethod === PAYMENT_METHOD.card;
-  const isCash = paymentMethod === PAYMENT_METHOD.cash;
-  console.log("payment :>> ", [isCard, isCash]);
+  const isCard = paymentMethod === PAYMENT_METHOD.card
+  const isCash = paymentMethod === PAYMENT_METHOD.cash
 
   return (
-    <aside className="col-lg-3">
-      <div className="summary">
-        <h3 className="summary-title">Your Order</h3>
-        <table className="table table-summary">
+    <aside className='col-lg-3'>
+      <div className='summary'>
+        <h3 className='summary-title'>Your Order</h3>
+        <table className='table table-summary'>
           <thead>
             <tr>
               <th>Product</th>
@@ -48,15 +47,15 @@ const CheckoutSummary = ({
           <tbody>
             {products?.length > 0 &&
               products?.map((product, index) => {
-                const { id, price, slug, name } = product || {};
+                const { id, price, slug, name } = product || {}
                 return (
                   <tr key={id || index}>
                     <td>
-                      <Link to={`${PATHS.PRODUCT}${slug ? "/" + slug : ""}`}>
+                      <Link to={`${PATHS.PRODUCT}${slug ? '/' + slug : ''}`}>
                         {name}
                       </Link>
                       <br />
-                      <span style={{ color: "#fcb941" }}>
+                      <span style={{ color: '#fcb941' }}>
                         ${formatCurrency(price)} x {quantity[index]}
                       </span>
                     </td>
@@ -64,7 +63,7 @@ const CheckoutSummary = ({
                       ${formatCurrency(price * Number(quantity[index] || 1))}
                     </td>
                   </tr>
-                );
+                )
               })}
             {/* <tr>
               <td>
@@ -79,7 +78,7 @@ const CheckoutSummary = ({
               </td>
               <td>$76,00</td>
             </tr> */}
-            <tr className="summary-subtotal">
+            <tr className='summary-subtotal'>
               <td>Subtotal:</td>
               <td>${subTotal}</td>
             </tr>
@@ -94,95 +93,95 @@ const CheckoutSummary = ({
               )}
             </tr>
 
-            <tr className="summary-total">
+            <tr className='summary-total'>
               <td>Total:</td>
               <td>${total}</td>
             </tr>
           </tbody>
         </table>
-        <div className="accordion-summary" id="accordion-payment">
+        <div className='accordion-summary' id='accordion-payment'>
           {/* Bank Transfer */}
-          <div className="card">
+          <div className='card'>
             <div
-              className="card-header"
-              id="heading-1"
+              className='card-header'
+              id='heading-1'
               onClick={() => onUpdatePaymentMethod(PAYMENT_METHOD.card)}
             >
-              <h2 className="card-title">
+              <h2 className='card-title'>
                 <a
-                  role="button"
-                  className={isCard ? "" : "collapsed"}
+                  role='button'
+                  className={isCard ? '' : 'collapsed'}
                   // data-toggle="collapse"
                   // href="#collapse-1"
                   // aria-expanded="true"
                   // aria-controls="collapse-1"
                 >
-                  {" "}
-                  Direct bank transfer{" "}
+                  {' '}
+                  Direct bank transfer{' '}
                 </a>
               </h2>
             </div>
             <div
-              id="collapse-1"
+              id='collapse-1'
               // className="collapse show"
-              className={cn("collapse", { show: isCard })}
-              aria-labelledby="heading-1"
-              data-parent="#accordion-payment"
+              className={cn('collapse', { show: isCard })}
+              aria-labelledby='heading-1'
+              data-parent='#accordion-payment'
             >
-              <div className="card-body">
-                {" "}
+              <div className='card-body'>
+                {' '}
                 Make your payment directly into our bank account. Please use
                 your Order ID as the payment reference. Your order will not be
-                shipped until the funds have cleared in our account.{" "}
+                shipped until the funds have cleared in our account.{' '}
               </div>
             </div>
           </div>
 
           {/* Cash */}
-          <div className="card">
-            <div className="card-header" id="heading-3">
+          <div className='card'>
+            <div className='card-header' id='heading-3'>
               <h2
-                className="card-title"
+                className='card-title'
                 onClick={() => onUpdatePaymentMethod(PAYMENT_METHOD.cash)}
               >
                 <a
-                  className={isCash ? "" : "collapsed"}
-                  role="button"
+                  className={isCash ? '' : 'collapsed'}
+                  role='button'
                   // data-toggle="collapse"
                   // href="#collapse-3"
                   // aria-expanded="false"
                   // aria-controls="collapse-3"
                 >
-                  {" "}
-                  Cash on delivery{" "}
+                  {' '}
+                  Cash on delivery{' '}
                 </a>
               </h2>
             </div>
             <div
-              id="collapse-3"
-              className={cn("collapse", { show: isCash })}
-              aria-labelledby="heading-3"
-              data-parent="#accordion-payment"
+              id='collapse-3'
+              className={cn('collapse', { show: isCash })}
+              aria-labelledby='heading-3'
+              data-parent='#accordion-payment'
             >
-              <div className="card-body">
+              <div className='card-body'>
                 Quisque volutpat mattis eros. Lorem ipsum dolor sit amet,
                 consectetuer adipiscing elit. Donec odio. Quisque volutpat
-                mattis eros.{" "}
+                mattis eros.{' '}
               </div>
             </div>
           </div>
         </div>
         <button
-          type="submit"
+          type='submit'
           onClick={onCheckout}
-          className="btn btn-outline-primary-2 btn-order btn-block"
+          className='btn btn-outline-primary-2 btn-order btn-block'
         >
-          <span className="btn-text">Place Order</span>
-          <span className="btn-hover-text">Proceed to Checkout</span>
+          <span className='btn-text'>Place Order</span>
+          <span className='btn-hover-text'>Proceed to Checkout</span>
         </button>
       </div>
     </aside>
-  );
-};
+  )
+}
 
-export default CheckoutSummary;
+export default CheckoutSummary

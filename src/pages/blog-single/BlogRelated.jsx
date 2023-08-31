@@ -1,22 +1,21 @@
-import moment from "moment";
-import React from "react";
-import OwlCarousel from "react-owl-carousel";
-import { Link } from "react-router-dom";
-import { PATHS } from "../../constants/pathnames";
+import moment from 'moment'
+import React from 'react'
+import OwlCarousel from 'react-owl-carousel'
+import { Link } from 'react-router-dom'
+import { PATHS } from '../../constants/pathnames'
 
 const BlogRelated = ({ renderRelated }) => {
-  console.log("renderRelated :>> ", renderRelated);
   if (!renderRelated?.length) {
     return (
-      <div className="related-posts">
-        <h3 className="title">Related Posts</h3>
+      <div className='related-posts'>
+        <h3 className='title'>Related Posts</h3>
         <span>THERE ARE NO RELATED POSTS!</span>
       </div>
-    );
+    )
   }
   return (
-    <div className="related-posts">
-      <h3 className="title">Related Posts</h3>
+    <div className='related-posts'>
+      <h3 className='title'>Related Posts</h3>
       {/* <div
         className="owl-carousel owl-simple"
         data-toggle="owl"
@@ -133,50 +132,50 @@ const BlogRelated = ({ renderRelated }) => {
       </div> */}
       {renderRelated?.length > 0 && (
         <OwlCarousel
-          className="owl-carousel owl-simple"
+          className='owl-carousel owl-simple'
           nav={false}
           dots={true}
           loop={false}
           margin={20}
           responsive={{
             0: {
-              items: 1,
+              items: 1
             },
             480: {
-              items: 2,
+              items: 2
             },
             768: {
-              items: 3,
-            },
+              items: 3
+            }
           }}
         >
           {renderRelated?.map((item, index) => {
-            const { slug, image, createdAt, author, name, id } = item || {};
-            const postedDate = moment(createdAt).format("MMM DD, YYYY");
+            const { slug, image, createdAt, author, name, id } = item || {}
+            const postedDate = moment(createdAt).format('MMM DD, YYYY')
             return (
-              <article className="entry entry-grid" key={id || index}>
-                <figure className="entry-media">
-                  <Link to={`${PATHS.BLOG}${slug ? "/" + slug : ""}`}>
+              <article className='entry entry-grid' key={id || index}>
+                <figure className='entry-media'>
+                  <Link to={`${PATHS.BLOG}${slug ? '/' + slug : ''}`}>
                     <img src={image} alt={slug} />
                   </Link>
                 </figure>
-                <div className="entry-body">
-                  <div className="entry-meta">
+                <div className='entry-body'>
+                  <div className='entry-meta'>
                     <span>{postedDate}</span>
-                    <span className="meta-separator">|</span>
-                    <span className="entry-author">
-                      {" "}
-                      by <a href="#">{author || "empty"}</a>
+                    <span className='meta-separator'>|</span>
+                    <span className='entry-author'>
+                      {' '}
+                      by <a href='#'>{author || 'empty'}</a>
                     </span>
                   </div>
-                  <h2 className="entry-title">
-                    <Link to={`${PATHS.BLOG}${slug ? "/" + slug : ""}`}>
+                  <h2 className='entry-title'>
+                    <Link to={`${PATHS.BLOG}${slug ? '/' + slug : ''}`}>
                       {name}
                     </Link>
                   </h2>
                 </div>
               </article>
-            );
+            )
           })}
           {/* <article className="entry entry-grid">
           <figure className="entry-media">
@@ -273,7 +272,7 @@ const BlogRelated = ({ renderRelated }) => {
         </OwlCarousel>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default BlogRelated;
+export default BlogRelated

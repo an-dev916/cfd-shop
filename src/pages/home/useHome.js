@@ -1,124 +1,123 @@
-import { message } from "antd";
-import { useMemo, useState } from "react";
-import HOT_TABS from "../../constants/hotTabs";
-import useMutation from "../../hooks/useMutation";
-import useQuery from "../../hooks/useQuery";
-import { pagesService } from "../../services/pagesService";
-import { productService } from "../../services/productSevice";
-import { subscribeService } from "../../services/subscribeService";
+import { message } from 'antd'
+import { useMemo, useState } from 'react'
+import HOT_TABS from '../../constants/hotTabs'
+import useMutation from '../../hooks/useMutation'
+import useQuery from '../../hooks/useQuery'
+import { pagesService } from '../../services/pagesService'
+import { productService } from '../../services/productSevice'
+import { subscribeService } from '../../services/subscribeService'
 
 const useHome = () => {
   // Brands Section
   const {
     data: homeData,
     loading: homeDataLoading,
-    error: homeDataError,
-  } = useQuery(() => pagesService.getPageByName("home"));
-  const brands = homeData?.data?.brands || [];
+    error: homeDataError
+  } = useQuery(() => pagesService.getPageByName('home'))
+  const brands = homeData?.data?.brands || []
 
   const brandsProps = {
-    brands,
-  };
+    brands
+  }
 
   // Products List
   const {
     data: productsData,
     loading: productsDataLoading,
-    error: productsDataError,
-  } = useQuery(productService.getProducts);
-  const products = productsData?.products || [];
+    error: productsDataError
+  } = useQuery(productService.getProducts)
+  const products = productsData?.products || []
   // Product Categories
   const {
     data: catesData,
     loading: catesDataLoading,
-    error: catesDataError,
-  } = useQuery(productService.getCates);
-  const cates = catesData?.products || [];
+    error: catesDataError
+  } = useQuery(productService.getCates)
+  const cates = catesData?.products || []
 
   // Get Deals Section
-  const [dealClick, setDealClick] = useState(true);
+  const [dealClick, setDealClick] = useState(true)
   const { loading: dealLoading, execute: dealExecute } = useMutation(
     subscribeService.subscribeDeals,
     {
       onSuccess: (data) => {
         message.config({
-          top: 60,
-        });
-        message.success("Subscribe Succesfully!");
+          top: 60
+        })
+        message.success('Subscribe Succesfully!')
       },
       onFail: (error) => {
-        console.log("error :>> ", error);
-        message.error("Subscribe Failed!");
-      },
+        console.log('error :>> ', error)
+        message.error('Subscribe Failed!')
+      }
     }
-  );
+  )
 
   const onGetDeals = (email) => {
     if (email) {
       dealExecute({
-        email: email,
-      });
+        email: email
+      })
     }
-  };
+  }
 
   const getDealsProps = {
     onGetDeals,
     setDealClick,
-    dealClick,
-  };
+    dealClick
+  }
 
   // Hot Products Section
-  const [selectedHotTab, setSelectedHotTab] = useState(HOT_TABS.featured);
+  const [selectedHotTab, setSelectedHotTab] = useState(HOT_TABS.featured)
   const hotProductProps = useMemo(() => {
-    let hotProducts = [];
+    let hotProducts = []
 
     switch (selectedHotTab) {
       case HOT_TABS.featured:
-        hotProducts = products?.filter((el) => el.featured);
-        break;
+        hotProducts = products?.filter((el) => el.featured)
+        break
 
       case HOT_TABS.onSale:
-        hotProducts = products?.filter((el) => el.onSale);
-        break;
+        hotProducts = products?.filter((el) => el.onSale)
+        break
 
       case HOT_TABS.topRated:
-        hotProducts = products?.filter((el) => el.topRated);
-        break;
+        hotProducts = products?.filter((el) => el.topRated)
+        break
 
       default:
-        hotProducts = [];
-        break;
+        hotProducts = []
+        break
     }
     return {
       hotProducts,
       selectedHotTab,
-      onSelectHotTab: setSelectedHotTab,
-    };
-  }, [products, selectedHotTab]);
+      onSelectHotTab: setSelectedHotTab
+    }
+  }, [products, selectedHotTab])
 
   // Featured Section
-  const [selectedCateSlug, setSelectedCateSlug] = useState("all");
+  const [selectedCateSlug, setSelectedCateSlug] = useState('all')
   const featuredProps = useMemo(() => {
     const featuredProducts =
-      selectedCateSlug === "all"
+      selectedCateSlug === 'all'
         ? [...(products || [])]
         : products?.filter(
             (product) => product?.category?.slug === selectedCateSlug
-          );
+          )
     return {
-      categories: [{ name: "All", slug: "all" }, ...cates],
+      categories: [{ name: 'All', slug: 'all' }, ...cates],
       featuredProducts,
       selectedCateSlug,
-      onSelectedCateSlug: (slug) => setSelectedCateSlug(slug),
-    };
-  }, [selectedCateSlug, products, cates, setSelectedCateSlug]);
+      onSelectedCateSlug: (slug) => setSelectedCateSlug(slug)
+    }
+  }, [selectedCateSlug, products, cates, setSelectedCateSlug])
 
   // Services Section
-  const ourServices = homeData?.data?.information || {};
-  console.log("ourServices :>> ", ourServices);
+  const ourServices = homeData?.data?.information || {}
   const servicesProps = {
-    ourServices,
-  };
+    ourServices
+  }
 
   return {
     brands,
@@ -127,8 +126,8 @@ const useHome = () => {
     featuredProps,
     getDealsProps,
     brandsProps,
-    servicesProps,
-  };
-};
+    servicesProps
+  }
+}
 
-export default useHome;
+export default useHome

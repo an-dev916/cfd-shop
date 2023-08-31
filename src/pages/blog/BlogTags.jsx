@@ -1,20 +1,19 @@
-import { message } from "antd";
-import React from "react";
+import { message } from 'antd'
+import React from 'react'
 
 const BlogTags = ({ tagsList, handleClickTag }) => {
-  console.log("tagsList :>> ", tagsList);
   return (
-    <div className="widget">
-      <h3 className="widget-title">Browse Tags</h3>
-      <div className="tagcloud">
+    <div className='widget'>
+      <h3 className='widget-title'>Browse Tags</h3>
+      <div className='tagcloud'>
         {tagsList?.length > 0 &&
           tagsList?.map((tag, index) => {
-            const { name, id } = tag || {};
+            const { name, id } = tag || {}
             return (
               <a key={id || index} onClick={() => handleClickTag(id)}>
                 {name}
               </a>
-            );
+            )
           })}
         {/* <a href="#">fashion</a>
         <a href="#">style</a>
@@ -25,7 +24,7 @@ const BlogTags = ({ tagsList, handleClickTag }) => {
         <a href="#">hobbies</a> */}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BlogTags;
+export default BlogTags

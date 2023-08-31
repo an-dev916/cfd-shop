@@ -1,37 +1,35 @@
-import DOMPurify from "dompurify";
-import moment from "moment";
-import React from "react";
-import parse from "html-react-parser";
+import DOMPurify from 'dompurify'
+import moment from 'moment'
+import React from 'react'
+import parse from 'html-react-parser'
 
 const BlogArticle = ({ articleData, isloading, isError, allTags }) => {
-  console.log("allTags :>> ", allTags);
   const { image, name, description, createdAt, author, tags, slug } =
-    articleData || {};
+    articleData || {}
   const cleanHTML = DOMPurify.sanitize(description, {
-    USE_PROFILES: { html: true },
-  });
-  const postedDate = moment(createdAt).format("MMM DD, YYYY");
-  const filterTags = allTags?.filter((item) => tags?.includes(item.id));
-  console.log("filterTags :>> ", filterTags);
+    USE_PROFILES: { html: true }
+  })
+  const postedDate = moment(createdAt).format('MMM DD, YYYY')
+  const filterTags = allTags?.filter((item) => tags?.includes(item.id))
   return (
-    <article className="entry single-entry">
-      <div className="entry-body">
-        <figure className="entry-media">
-          <img src={image || ""} alt={slug || ""} />
+    <article className='entry single-entry'>
+      <div className='entry-body'>
+        <figure className='entry-media'>
+          <img src={image || ''} alt={slug || ''} />
         </figure>
-        <h1 className="entry-title entry-title-big"> {name} </h1>
-        <div className="entry-meta">
+        <h1 className='entry-title entry-title-big'> {name} </h1>
+        <div className='entry-meta'>
           <span>{postedDate}</span>
-          <span className="meta-separator">|</span>
-          <span className="entry-author">
-            {" "}
-            by{" "}
-            <a href="https://www.facebook.com/an.peter.735/" target="_blank">
+          <span className='meta-separator'>|</span>
+          <span className='entry-author'>
+            {' '}
+            by{' '}
+            <a href='https://www.facebook.com/an.peter.735/' target='_blank'>
               {author}
             </a>
           </span>
         </div>
-        <div className="entry-content editor-content">
+        <div className='entry-content editor-content'>
           {parse(cleanHTML)}
           {/* <p>
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus
@@ -94,59 +92,59 @@ const BlogArticle = ({ articleData, isloading, isError, allTags }) => {
             pede arcu, dapibus eu, fermentum et, dapibus sed, urna.{" "}
           </p> */}
         </div>
-        <div className="entry-footer row no-gutters flex-column flex-md-row">
-          <div className="col-md">
-            <div className="entry-tags">
+        <div className='entry-footer row no-gutters flex-column flex-md-row'>
+          <div className='col-md'>
+            <div className='entry-tags'>
               <span>Tags:</span>
               {filterTags?.length > 0 &&
                 filterTags?.map((item, index) => {
-                  return <a key={item?.id || index}>{item?.name || ""}</a>;
+                  return <a key={item?.id || index}>{item?.name || ''}</a>
                 })}
               {/* <a href="#">photography</a>
               <a href="#">style</a> */}
             </div>
           </div>
-          <div className="col-md-auto mt-2 mt-md-0">
-            <div className="social-icons social-icons-color">
-              <span className="social-label">Share this post:</span>
+          <div className='col-md-auto mt-2 mt-md-0'>
+            <div className='social-icons social-icons-color'>
+              <span className='social-label'>Share this post:</span>
               <a
-                href="#"
-                className="social-icon social-facebook"
-                title="Facebook"
-                target="_blank"
+                href='#'
+                className='social-icon social-facebook'
+                title='Facebook'
+                target='_blank'
               >
-                <i className="icon-facebook-f" />
+                <i className='icon-facebook-f' />
               </a>
               <a
-                href="#"
-                className="social-icon social-twitter"
-                title="Twitter"
-                target="_blank"
+                href='#'
+                className='social-icon social-twitter'
+                title='Twitter'
+                target='_blank'
               >
-                <i className="icon-twitter" />
+                <i className='icon-twitter' />
               </a>
               <a
-                href="#"
-                className="social-icon social-pinterest"
-                title="Pinterest"
-                target="_blank"
+                href='#'
+                className='social-icon social-pinterest'
+                title='Pinterest'
+                target='_blank'
               >
-                <i className="icon-pinterest" />
+                <i className='icon-pinterest' />
               </a>
               <a
-                href="#"
-                className="social-icon social-linkedin"
-                title="Linkedin"
-                target="_blank"
+                href='#'
+                className='social-icon social-linkedin'
+                title='Linkedin'
+                target='_blank'
               >
-                <i className="icon-linkedin" />
+                <i className='icon-linkedin' />
               </a>
             </div>
           </div>
         </div>
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default BlogArticle;
+export default BlogArticle
