@@ -88,8 +88,8 @@ const useBlog = () => {
   //   Search Props
   const [searchBlog, setSearchBlog] = useState(null)
   const debouncedValue = useDebounce(searchBlog, 300)
-  const onSearchChange = (value) => {
-    updateQueryString({ ...queryObject, page: 1, search: value })
+  const onSearchChange = (debouncedValue) => {
+    updateQueryString({ ...queryObject, page: 1, search: debouncedValue })
   }
 
   const searchProps = {

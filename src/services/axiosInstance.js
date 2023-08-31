@@ -13,7 +13,6 @@ instance.interceptors.response.use(
     return response
   },
   async (error) => {
-    console.log('instance res error 1:>> ', error)
     const originalRequest = error.config
     // Nếu mã lỗi là 401 hoặc 403
     if (error.response.status === 401 || error.response.status === 403) {
@@ -35,7 +34,6 @@ instance.interceptors.response.use(
       } catch (error) {
         // Xử lý lỗi nếu không thể cập nhật token mới
         // Ví dụ: chuyển hướng người dùng đến trang login
-        console.log('instance res error 2:>> ', error)
         // alert("Phiên bản hết hạn! Vui lòng đăng nhập lại.");
         localStorage.removeItem(LOCAL_STORAGE.token)
         localStorage.removeItem(LOCAL_STORAGE.refreshToken)
@@ -50,7 +48,6 @@ instance.interceptors.response.use(
 // Interceptor cho phép can thiệp vào quá trình gửi yêu cầu (REQUEST) từ server.
 instance.interceptors.request.use(
   (config) => {
-    console.log('instance req config', config)
     // xử lý yêu cầu trước khi gửi đi
     config.headers.Authorization = `Bearer ${localStorage.getItem(
       LOCAL_STORAGE.token
@@ -58,7 +55,6 @@ instance.interceptors.request.use(
     return config
   },
   (error) => {
-    console.log('instance req error', error)
     // xử lý lỗi nếu có
     return Promise.reject(error)
   }
