@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { productService } from '../../services/productSevice'
 import ProductTabs from './ProductTabs'
 import ProductTop from './ProductTop'
@@ -33,6 +33,7 @@ const ProductDetail = () => {
   const { quantityPruduct } = productTopProps || {}
   const { onOpenModal } = useAuthen()
   const { slug } = useParams()
+  const navigate = useNavigate()
   const token = localStorage.getItem(LOCAL_STORAGE.token)
   const { cartInfo, updateStatus } = useSelector((state) => state.cart)
   const dispatch = useDispatch()
@@ -154,9 +155,11 @@ const ProductDetail = () => {
     try {
       const res = await productService.getProductsBySlug(slug)
       const detailRes = res?.data?.data
-      if (detailRes) {
+      if (detailRes !== '-') {
         setRenderProduct(detailRes)
         message.success(`Successfully!`)
+      } else {
+        navigate(PATHS.HOME)
       }
     } catch (error) {
       message.error('Something wrong, please try again!')
@@ -165,14 +168,17 @@ const ProductDetail = () => {
   }
 
   const geReviewsProduct = async (productID) => {
-    try {
-      const res = await orderService.getReview(productID)
-      const reviewsRes = res?.data?.data
-      if (reviewsRes) {
-        setRenderReviews(reviewsRes)
+    if (!!productID) {
+      try {
+        const res = await orderService.getReview(productID)
+        console.log('resss', res)
+        const reviewsRes = res?.data?.data
+        if (reviewsRes) {
+          setRenderReviews(reviewsRes)
+        }
+      } catch (error) {
+        console.log('error :>> ', error)
       }
-    } catch (error) {
-      console.log('error :>> ', error)
     }
   }
 
