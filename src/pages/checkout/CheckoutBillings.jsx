@@ -294,7 +294,7 @@ const CheckoutBillings = ({ form, profile }) => {
           )
         }}
       />
-      <div className='custom-control custom-checkbox'>
+      {/* <div className='custom-control custom-checkbox'>
         <input
           type='checkbox'
           className='custom-control-input'
@@ -303,7 +303,7 @@ const CheckoutBillings = ({ form, profile }) => {
         <label className='custom-control-label' htmlFor='checkout-create-acc'>
           Create an account?
         </label>
-      </div>
+      </div> */}
     </div>
   )
 }

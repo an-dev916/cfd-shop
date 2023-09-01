@@ -1,5 +1,4 @@
-import React, { forwardRef } from "react";
-import { useForm } from "react-hook-form";
+import React, { forwardRef } from 'react'
 
 const Input = forwardRef(
   (
@@ -13,12 +12,10 @@ const Input = forwardRef(
     },
     ref
   ) => {
-    // const {handleSubmit} = useForm()
-
     return (
-      <div className="form-group" style={style || {}}>
+      <div className='form-group' style={style || {}}>
         {label && (
-          <label htmlFor={inputProps?.name || ""}>
+          <label htmlFor={inputProps?.name || ''}>
             {label} {required && <span>*</span>}
           </label>
         )}
@@ -26,14 +23,14 @@ const Input = forwardRef(
         {renderInput?.({ ...inputProps, ref: ref }) || (
           <input
             ref={ref}
-            className={`form-control ${!!error ? "input-error" : ""}`}
+            className={`form-control ${!!error ? 'input-error' : ''}`}
             {...inputProps}
           />
         )}
-        {!!error && <p className="form-error">{error}</p>}
+        {!!error && <p className='form-error'>{error}</p>}
       </div>
-    );
+    )
   }
-);
+)
 
-export default Input;
+export default Input

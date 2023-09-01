@@ -4,7 +4,7 @@ import useQuery from '../../hooks/useQuery'
 import blogService from '../../services/blogService'
 
 const useBlogSingle = () => {
-  const { slug } = useParams()
+  const { slug, id } = useParams()
   const {
     data: blogSingleData,
     loading: blogSingleLoading,
@@ -55,12 +55,6 @@ const useBlogSingle = () => {
   )
 
   const relatedBlogProps = { renderRelated }
-
-  // useEffect(() => {
-
-  //   blogSingleRefetch?.(slug);
-
-  // }, [slug]);
 
   useEffect(() => {
     const findBlogIndex = allBlogs?.findIndex(
