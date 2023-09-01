@@ -1,15 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import RegisterForm from "./RegisterForm";
-import LoginForm from "./LoginForm";
-import cn from "classnames";
-import { styled } from "styled-components";
-import { AUTHEN_TYPES } from "../../constants/authenTypes";
-import useAuthenModal from "./useAuthenModal";
+import React, { useRef } from 'react'
+import ReactDOM from 'react-dom'
+import RegisterForm from './RegisterForm'
+import LoginForm from './LoginForm'
+import cn from 'classnames'
+import { styled } from 'styled-components'
+import { AUTHEN_TYPES } from '../../constants/authenTypes'
+import useAuthenModal from './useAuthenModal'
 
 const AuthenModalWrap = styled.div`
-  display: ${(props) => (props.isAuthenModalOpen ? "block" : "none")};
-`;
+  display: ${(props) => (props.isAuthenModalOpen ? 'block' : 'none')};
+`
 
 const AuthenModal = () => {
   const {
@@ -18,78 +18,101 @@ const AuthenModal = () => {
     setRenderForm,
     onCloseModal,
     ...rest
-  } = useAuthenModal();
+  } = useAuthenModal()
+  const loginRef = useRef(null)
+  const registerRef = useRef(null)
 
   if (!isAuthenModalOpen) {
-    return <></>;
+    return <></>
+  }
+
+  if (renderForm === AUTHEN_TYPES.login) {
+    console.log('login', loginRef)
+    loginRef.current?.focus()
+  } else {
+    console.log('register', registerRef)
+    registerRef.current?.focus()
   }
 
   return ReactDOM.createPortal(
     <>
       <AuthenModalWrap
         isAuthenModalOpen={isAuthenModalOpen}
-        className={cn("modal", { "show fade": isAuthenModalOpen })}
-        id="signin-modal"
-        role="dialog"
-        aria-hidden="true"
+        className={cn('modal', { 'show fade': isAuthenModalOpen })}
+        id='signin-modal'
+        role='dialog'
+        aria-hidden='true'
         onClick={onCloseModal}
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className='modal-dialog modal-dialog-centered' role='document'>
           <div
-            className="modal-content"
+            className='modal-content'
             onClick={(ev) => {
-              ev.stopPropagation();
+              ev.stopPropagation()
             }}
           >
-            <div className="modal-body">
+            <div className='modal-body'>
               <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
+                type='button'
+                className='close'
+                data-dismiss='modal'
+                aria-label='Close'
                 onClick={onCloseModal}
               >
-                <span aria-hidden="true">
-                  <i className="icon-close" />
+                <span aria-hidden='true'>
+                  <i className='icon-close' />
                 </span>
               </button>
-              <div className="form-box">
-                <div className="form-tab">
+              <div className='form-box'>
+                <div className='form-tab'>
                   <ul
-                    className="nav nav-pills nav-fill nav-border-anim"
-                    role="tablist"
+                    className='nav nav-pills nav-fill nav-border-anim'
+                    role='tablist'
                   >
-                    <li className="nav-item">
+                    <li className='nav-item'>
                       <a
-                        className={cn("nav-link", {
-                          active: renderForm === AUTHEN_TYPES.login,
+                        className={cn('nav-link', {
+                          active: renderForm === AUTHEN_TYPES.login
                         })}
-                        id="signin-tab"
+                        id='signin-tab'
                         onClick={() => setRenderForm(AUTHEN_TYPES.login)}
-                        role="tab"
+                        role='tab'
                       >
                         Sign In
                       </a>
                     </li>
-                    <li className="nav-item">
+                    <li className='nav-item'>
                       <a
-                        className={cn("nav-link", {
-                          active: renderForm === AUTHEN_TYPES.register,
+                        className={cn('nav-link', {
+                          active: renderForm === AUTHEN_TYPES.register
                         })}
-                        id="register-tab"
+                        id='register-tab'
                         onClick={() => setRenderForm(AUTHEN_TYPES.register)}
-                        role="tab"
+                        role='tab'
                       >
                         Register
                       </a>
                     </li>
                   </ul>
-                  <div className="tab-content" id="tab-content-5">
+                  <div className='tab-content' id='tab-content-5'>
                     {/* SIGN INNNNNNNNNNNNNNNNNNNNNNNNNNNNN */}
-                    {renderForm === "login" && <LoginForm {...rest} />}
+                    {renderForm === AUTHEN_TYPES.login && (
+                      <LoginForm
+                        {...rest}
+                        renderForm={renderForm}
+                        isAuthenModalOpen={isAuthenModalOpen}
+                        ref={loginRef}
+                      />
+                    )}
 
                     {/* REGISTERRRRRRRRRRRRRRRRRRRRRRRRRRRR */}
-                    {renderForm === "register" && <RegisterForm {...rest} />}
+                    {renderForm === AUTHEN_TYPES.register && (
+                      <RegisterForm
+                        {...rest}
+                        renderForm={renderForm}
+                        ref={registerRef}
+                      />
+                    )}
                   </div>
                   {/* End .tab-content */}
                 </div>
@@ -105,15 +128,15 @@ const AuthenModal = () => {
       </AuthenModalWrap>
       {isAuthenModalOpen && (
         <div
-          style={{ pointerEvents: isAuthenModalOpen ? "initial" : "none" }}
-          className={cn("modal-backdrop fade", {
-            show: isAuthenModalOpen,
+          style={{ pointerEvents: isAuthenModalOpen ? 'initial' : 'none' }}
+          className={cn('modal-backdrop fade', {
+            show: isAuthenModalOpen
           })}
         ></div>
       )}
     </>,
     document.body
-  );
-};
+  )
+}
 
-export default AuthenModal;
+export default AuthenModal

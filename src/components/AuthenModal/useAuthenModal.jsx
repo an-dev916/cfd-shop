@@ -1,4 +1,4 @@
-import { useAuthen } from "../MainContext";
+import { useAuthen } from '../MainContext'
 
 const useAuthenModal = () => {
   const {
@@ -8,8 +8,8 @@ const useAuthenModal = () => {
     setRenderForm,
     onCloseModal,
     onLogin,
-    onRegister,
-  } = useAuthen();
+    onRegister
+  } = useAuthen()
 
   return {
     isAuthenModalOpen,
@@ -18,8 +18,8 @@ const useAuthenModal = () => {
     renderForm,
     setRenderForm,
     onLogin,
-    onRegister,
-  };
-};
+    onRegister
+  }
+}
 
-export default useAuthenModal;
+export default useAuthenModal

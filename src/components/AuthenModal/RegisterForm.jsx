@@ -1,5 +1,8 @@
+import React from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
+import { PATHS } from '../../constants/pathnames'
 import Input from '../Input'
 
 const InputNameWrap = styled.div`
@@ -9,7 +12,7 @@ const InputNameWrap = styled.div`
   gap: 10px;
 `
 
-const RegisterForm = ({ onRegister }) => {
+const RegisterForm = React.forwardRef(({ onRegister }, ref) => {
   const {
     handleSubmit,
     register,
@@ -33,6 +36,7 @@ const RegisterForm = ({ onRegister }) => {
         <InputNameWrap>
           {/* First Name */}
           <Input
+            ref={ref}
             label='First Name'
             required
             style={{ flex: 1 }}
@@ -94,13 +98,34 @@ const RegisterForm = ({ onRegister }) => {
             <i className='icon-long-arrow-right' />
           </button>
           <div className='custom-control custom-checkbox'>
-            <input
+            {/* <input
               type='checkbox'
               className='custom-control-input'
               id='register-policy'
             />
             <label className='custom-control-label' htmlFor='register-policy'>
               I agree to the <a href='privacy-policy.html'>privacy policy</a> *
+            </label> */}
+            <input
+              type='checkbox'
+              className='custom-control-input'
+              id='register-policy'
+              {...register('privacyPolicy', {
+                required: 'Please check to agree our policy'
+              })}
+            />
+            <label
+              className='custom-control-label'
+              htmlFor='register-policy'
+              style={{
+                color: errors?.privacyPolicy?.message ? 'red' : '#666'
+              }}
+            >
+              I agree to the{' '}
+              <Link to={PATHS.PRIVACY_POLICY} target='_blank'>
+                privacy policy
+              </Link>{' '}
+              *
             </label>
           </div>
           {/* End .custom-checkbox */}
@@ -126,6 +151,6 @@ const RegisterForm = ({ onRegister }) => {
       </div> */}
     </div>
   )
-}
+})
 
 export default RegisterForm

@@ -1,83 +1,84 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import Button from "../Button";
-import Input from "../Input";
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import Button from '../Button'
+import Input from '../Input'
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = React.forwardRef(({ onLogin }, ref) => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
-  } = useForm();
+    formState: { errors }
+  } = useForm()
 
   const onSubmit = (data) => {
     if (data) {
-      onLogin?.(data);
+      onLogin?.(data)
     }
-  };
+  }
 
   return (
     <div
-      className="tab-pane fade show active"
-      id="signin"
-      role="tabpanel"
-      aria-labelledby="signin-tab"
+      className='tab-pane fade show active'
+      id='signin'
+      role='tabpanel'
+      aria-labelledby='signin-tab'
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          label="Username or Email"
+          label='Username or Email'
           required
-          placeholder=""
-          {...register("email", {
-            required: "Email is required!",
+          placeholder=''
+          ref={ref}
+          {...register('email', {
+            required: 'Email is required!',
             pattern: {
               value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-              message: "Please type correct email!",
-            },
+              message: 'Please type correct email!'
+            }
           })}
           error={errors?.email?.message}
         ></Input>
         {/* End .form-group */}
         <Input
-          label="Password"
-          type="password"
+          label='Password'
+          type='password'
           required
-          placeholder=""
-          {...register("password", {
-            required: "Password is required!",
+          placeholder=''
+          {...register('password', {
+            required: 'Password is required!',
             minLength: {
               value: 8,
-              message: "Password minimun 8 characters",
+              message: 'Password minimun 8 characters'
             },
             pattern: {
               value:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message: "Must include Aa-Zz, 0-9, @$!%*?&",
-            },
+              message: 'Must include Aa-Zz, 0-9, @$!%*?&'
+            }
           })}
           error={errors?.password?.message}
         ></Input>
         {/* End .form-group */}
-        <div className="form-footer">
-          <Button type="submit" variant="outline">
+        <div className='form-footer'>
+          <Button type='submit' variant='outline'>
             <span>LOG IN</span>
-            <i className="icon-long-arrow-right" />{" "}
+            <i className='icon-long-arrow-right' />{' '}
           </Button>
 
-          <div className="custom-control custom-checkbox">
+          {/* <div className='custom-control custom-checkbox'>
             <input
-              type="checkbox"
-              className="custom-control-input"
-              id="signin-remember"
+              type='checkbox'
+              className='custom-control-input'
+              id='signin-remember'
             />
-            <label className="custom-control-label" htmlFor="signin-remember">
+            <label className='custom-control-label' htmlFor='signin-remember'>
               Remember Me
             </label>
-          </div>
+          </div> */}
           {/* End .custom-checkbox */}
-          <a href="#" className="forgot-link">
+          {/* <a href='#' className='forgot-link'>
             Forgot Your Password?
-          </a>
+          </a> */}
         </div>
         {/* End .form-footer */}
       </form>
@@ -99,7 +100,7 @@ const LoginForm = ({ onLogin }) => {
         </div>
       </div> */}
     </div>
-  );
-};
+  )
+})
 
-export default LoginForm;
+export default LoginForm
