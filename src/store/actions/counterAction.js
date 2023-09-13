@@ -1,22 +1,22 @@
 export const increment = (payload) => {
   return {
-    type: "Increment",
-    payload: payload || 1,
-  };
-};
+    type: 'INCREMENT',
+    payload: payload || 1
+  }
+}
 
 export const decrement = (payload) => {
   return {
-    type: "DECREMENT",
-    payload: payload || 1,
-  };
-};
+    type: 'DECREMENT',
+    payload: payload || 1
+  }
+}
 
 export const resetCounter = () => {
   return {
-    type: "RESET",
-  };
-};
+    type: 'RESET'
+  }
+}
 
 // export const callAPi = () => {
 //   return async (dispatch) => {

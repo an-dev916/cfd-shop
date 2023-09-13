@@ -1,12 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import counterReducer from "./reducers/counterReducer";
-import dogReducer from "./reducers/dogReducer";
-import thunkMiddleware from "redux-thunk";
-import { ENV } from "../constants/environments";
-import { authReducer } from "./reducers/authenReducer";
-import { cartReducer } from "./reducers/cartReducer";
-import { orderReducer } from "./reducers/orderReducer";
+import { configureStore } from '@reduxjs/toolkit'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import counterReducer from './reducers/counterReducer'
+import dogReducer from './reducers/dogReducer'
+import thunkMiddleware from 'redux-thunk'
+import { ENV } from '../constants/environments'
+import { authReducer } from './reducers/authenReducer'
+import { cartReducer } from './reducers/cartReducer'
+import { orderReducer } from './reducers/orderReducer'
 // export const reducers = combineReducers({
 //   counter: counterReducer,
 //   dog: dogReducer,
@@ -34,10 +34,11 @@ const store = configureStore({
     cart: cartReducer,
     order: orderReducer,
     counter: counterReducer,
+    dog: dogReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(thunkMiddleware),
-  devTools: ENV === "development",
-});
+  devTools: ENV === 'development'
+})
 
-export default store;
+export default store

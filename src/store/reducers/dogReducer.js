@@ -1,11 +1,11 @@
 const dogReducer = (state = null, action) => {
   switch (action.type) {
-    case "RANDOM":
-      return action.payload;
+    case 'RANDOM':
+      return action.payload
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default dogReducer;
+export default dogReducer

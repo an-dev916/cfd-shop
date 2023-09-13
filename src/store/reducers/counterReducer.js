@@ -1,30 +1,27 @@
 const initialState = {
   counter: 10,
-  data: "",
-};
+  data: ''
+}
 
 const counterReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "INCREMENT":
-      return state + action.payload;
-
-    case "DECREMENT":
-      return state - action.payload;
-
-    case "RESET":
-      return (state = initialState);
-    case "getdcdata":
+    case 'INCREMENT':
       return {
         ...state,
-        data: action.payload,
-      };
-    case "Increment":
+        counter: state.counter + action.payload
+      }
+
+    case 'DECREMENT':
       return {
-        counter: state.counter + action.payload,
-      };
+        ...state,
+        counter: state.counter - action.payload
+      }
+
+    case 'RESET':
+      return (state = initialState)
 
     default:
-      return state;
+      return state
   }
-};
-export default counterReducer;
+}
+export default counterReducer

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
+import { AUTHEN_TYPES } from '../../constants/authenTypes'
 import { PATHS } from '../../constants/pathnames'
 import Input from '../Input'
 
@@ -12,7 +13,7 @@ const InputNameWrap = styled.div`
   gap: 10px;
 `
 
-const RegisterForm = React.forwardRef(({ onRegister }, ref) => {
+const RegisterForm = forwardRef(({ onRegister }, ref) => {
   const {
     handleSubmit,
     register,
@@ -24,7 +25,7 @@ const RegisterForm = React.forwardRef(({ onRegister }, ref) => {
       onRegister?.(data)
     }
   }
-
+  console.log('registerRef :>> ', ref)
   return (
     <div
       className='tab-pane fade show active'
@@ -35,9 +36,10 @@ const RegisterForm = React.forwardRef(({ onRegister }, ref) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputNameWrap>
           {/* First Name */}
+          {/* <input type='text' placeholder='test input...' ref={ref} /> */}
           <Input
-            ref={ref}
             label='First Name'
+            ref={ref}
             required
             style={{ flex: 1 }}
             placeholder=''
