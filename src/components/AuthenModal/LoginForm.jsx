@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { forwardRef, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
+import { AUTHEN_TYPES } from '../../constants/authenTypes'
 import Button from '../Button'
 import Input from '../Input'
 
-const LoginForm = React.forwardRef(({ onLogin }, ref) => {
+const LoginForm = forwardRef(({ onLogin }, ref) => {
   const {
     handleSubmit,
     register,
@@ -15,7 +16,7 @@ const LoginForm = React.forwardRef(({ onLogin }, ref) => {
       onLogin?.(data)
     }
   }
-
+  console.log('loginRef :>> ', ref);
   return (
     <div
       className='tab-pane fade show active'
@@ -24,11 +25,12 @@ const LoginForm = React.forwardRef(({ onLogin }, ref) => {
       aria-labelledby='signin-tab'
     >
       <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <input type='text' placeholder='test input...' ref={ref} /> */}
         <Input
           label='Username or Email'
+          ref={ref}
           required
           placeholder=''
-          ref={ref}
           {...register('email', {
             required: 'Email is required!',
             pattern: {

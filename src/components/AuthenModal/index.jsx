@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import RegisterForm from './RegisterForm'
 import LoginForm from './LoginForm'
@@ -19,19 +19,22 @@ const AuthenModal = () => {
     onCloseModal,
     ...rest
   } = useAuthenModal()
+
   const loginRef = useRef(null)
   const registerRef = useRef(null)
+  
+  useEffect(() => {
+    if (isAuthenModalOpen) {
+      if (renderForm === AUTHEN_TYPES.register) {
+        registerRef?.current?.focus()
+      } else {
+        loginRef?.current?.focus()
+      }
+    }
+  }, [renderForm, isAuthenModalOpen])
 
   if (!isAuthenModalOpen) {
     return <></>
-  }
-
-  if (renderForm === AUTHEN_TYPES.login) {
-    console.log('login', loginRef)
-    loginRef.current?.focus()
-  } else {
-    console.log('register', registerRef)
-    registerRef.current?.focus()
   }
 
   return ReactDOM.createPortal(
@@ -94,24 +97,17 @@ const AuthenModal = () => {
                       </a>
                     </li>
                   </ul>
+
+                  {/* <button onClick={()=> loginRef?.current?.focus()}>Focus Login</button>
+                  <button onClick={()=> registerRef?.current?.focus()}>Focus Register</button> */}
+
                   <div className='tab-content' id='tab-content-5'>
-                    {/* SIGN INNNNNNNNNNNNNNNNNNNNNNNNNNNNN */}
                     {renderForm === AUTHEN_TYPES.login && (
-                      <LoginForm
-                        {...rest}
-                        renderForm={renderForm}
-                        isAuthenModalOpen={isAuthenModalOpen}
-                        ref={loginRef}
-                      />
+                      <LoginForm {...rest} ref={loginRef} />
                     )}
 
-                    {/* REGISTERRRRRRRRRRRRRRRRRRRRRRRRRRRR */}
                     {renderForm === AUTHEN_TYPES.register && (
-                      <RegisterForm
-                        {...rest}
-                        renderForm={renderForm}
-                        ref={registerRef}
-                      />
+                      <RegisterForm {...rest} ref={registerRef} />
                     )}
                   </div>
                   {/* End .tab-content */}
