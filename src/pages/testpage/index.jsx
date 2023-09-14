@@ -6,7 +6,6 @@ import { fetchDogImg } from '../../store/actions/dogAction'
 const TestPage = () => {
   const { counter } = useSelector((state) => state.counter)
   const dog = useSelector((state) => state.dog)
-  console.log('dog', dog)
   const dispatch = useDispatch()
   const increaseValue = () => {
     dispatch({ type: 'INCREMENT', payload: 10 })

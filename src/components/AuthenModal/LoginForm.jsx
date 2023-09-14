@@ -16,7 +16,6 @@ const LoginForm = forwardRef(({ onLogin }, ref) => {
       onLogin?.(data)
     }
   }
-  console.log('loginRef :>> ', ref);
   return (
     <div
       className='tab-pane fade show active'
@@ -25,10 +24,8 @@ const LoginForm = forwardRef(({ onLogin }, ref) => {
       aria-labelledby='signin-tab'
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <input type='text' placeholder='test input...' ref={ref} /> */}
         <Input
           label='Username or Email'
-          ref={ref}
           required
           placeholder=''
           {...register('email', {
@@ -38,6 +35,7 @@ const LoginForm = forwardRef(({ onLogin }, ref) => {
               message: 'Please type correct email!'
             }
           })}
+          ref={ref}
           error={errors?.email?.message}
         ></Input>
         {/* End .form-group */}
