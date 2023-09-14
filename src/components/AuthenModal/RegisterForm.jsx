@@ -25,7 +25,6 @@ const RegisterForm = forwardRef(({ onRegister }, ref) => {
       onRegister?.(data)
     }
   }
-  console.log('registerRef :>> ', ref)
   return (
     <div
       className='tab-pane fade show active'
@@ -36,14 +35,13 @@ const RegisterForm = forwardRef(({ onRegister }, ref) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputNameWrap>
           {/* First Name */}
-          {/* <input type='text' placeholder='test input...' ref={ref} /> */}
           <Input
             label='First Name'
-            ref={ref}
             required
             style={{ flex: 1 }}
             placeholder=''
             {...register('firstName', { required: 'First Name is required' })}
+            ref={ref}
             error={errors?.firstName?.message}
           ></Input>
 
