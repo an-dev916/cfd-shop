@@ -1,8 +1,7 @@
-import React, { forwardRef, useEffect, useRef } from 'react'
+import React, { forwardRef, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
-import { AUTHEN_TYPES } from '../../constants/authenTypes'
 import { PATHS } from '../../constants/pathnames'
 import Input from '../Input'
 
@@ -17,7 +16,8 @@ const RegisterForm = forwardRef(({ onRegister }, ref) => {
   const {
     handleSubmit,
     register,
-    formState: { errors }
+    formState: { errors },
+    setFocus
   } = useForm()
 
   const onSubmit = (data) => {
@@ -25,6 +25,10 @@ const RegisterForm = forwardRef(({ onRegister }, ref) => {
       onRegister?.(data)
     }
   }
+
+  useEffect(() => {
+    setFocus('firstName')
+  }, [ref, setFocus])
   return (
     <div
       className='tab-pane fade show active'
@@ -41,7 +45,6 @@ const RegisterForm = forwardRef(({ onRegister }, ref) => {
             style={{ flex: 1 }}
             placeholder=''
             {...register('firstName', { required: 'First Name is required' })}
-            // ref={ref}
             error={errors?.firstName?.message}
           ></Input>
 

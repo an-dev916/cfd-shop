@@ -1,6 +1,5 @@
-import React, { forwardRef, useEffect, useRef } from 'react'
+import React, { forwardRef, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { AUTHEN_TYPES } from '../../constants/authenTypes'
 import Button from '../Button'
 import Input from '../Input'
 
@@ -8,7 +7,8 @@ const LoginForm = forwardRef(({ onLogin }, ref) => {
   const {
     handleSubmit,
     register,
-    formState: { errors }
+    formState: { errors },
+    setFocus
   } = useForm()
 
   const onSubmit = (data) => {
@@ -16,6 +16,10 @@ const LoginForm = forwardRef(({ onLogin }, ref) => {
       onLogin?.(data)
     }
   }
+
+  useEffect(() => {
+    setFocus('email')
+  }, [ref, setFocus])
   return (
     <div
       className='tab-pane fade show active'
@@ -35,7 +39,6 @@ const LoginForm = forwardRef(({ onLogin }, ref) => {
               message: 'Please type correct email!'
             }
           })}
-          // ref={ref}
           error={errors?.email?.message}
         ></Input>
         {/* End .form-group */}
