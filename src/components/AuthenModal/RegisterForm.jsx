@@ -41,7 +41,7 @@ const RegisterForm = forwardRef(({ onRegister }, ref) => {
             style={{ flex: 1 }}
             placeholder=''
             {...register('firstName', { required: 'First Name is required' })}
-            ref={ref}
+            // ref={ref}
             error={errors?.firstName?.message}
           ></Input>
 

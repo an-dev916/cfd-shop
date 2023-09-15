@@ -35,7 +35,7 @@ const LoginForm = forwardRef(({ onLogin }, ref) => {
               message: 'Please type correct email!'
             }
           })}
-          ref={ref}
+          // ref={ref}
           error={errors?.email?.message}
         ></Input>
         {/* End .form-group */}
